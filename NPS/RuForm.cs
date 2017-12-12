@@ -77,72 +77,74 @@ namespace NPS
                 {
                     dlcsDbs.AddRange(ps3dlc);
 
-                    Invoke(new Action(() =>
-                {
-                    if (dlcsDbs.Count > 0)
-                        rbnDLC.Enabled = true;
-                    else rbnDLC.Enabled = false;
-                }));
-
-                    LoadDatabase(Settings.Instance.PSPUri, (psp) =>
+                    LoadDatabase(Settings.Instance.PSPDLCUri, (pspdlc) =>
                     {
-                        gamesDbs.AddRange(psp);
+                        dlcsDbs.AddRange(pspdlc);
 
-                        LoadDatabase(Settings.Instance.GamesUri, (vita) =>
+                        LoadDatabase(Settings.Instance.PSPUri, (psp) =>
                         {
-                            gamesDbs.AddRange(vita);
+                            gamesDbs.AddRange(psp);
 
-                            LoadDatabase(Settings.Instance.PSMUri, (psm) =>
+                            LoadDatabase(Settings.Instance.GamesUri, (vita) =>
                             {
-                                gamesDbs.AddRange(psm);
+                                gamesDbs.AddRange(vita);
 
-                                LoadDatabase(Settings.Instance.PS3Uri, (ps3) =>
+                                LoadDatabase(Settings.Instance.PSMUri, (psm) =>
                                 {
-                                    gamesDbs.AddRange(ps3);
+                                    gamesDbs.AddRange(psm);
 
-                                    LoadDatabase(Settings.Instance.PSXUri, (psx) =>
+                                    LoadDatabase(Settings.Instance.PS3Uri, (ps3) =>
                                     {
-                                        gamesDbs.AddRange(psx);
+                                        gamesDbs.AddRange(ps3);
 
-                                        Invoke(new Action(() =>
+                                        LoadDatabase(Settings.Instance.PSXUri, (psx) =>
                                         {
-                                            if (gamesDbs.Count > 0)
-                                                rbnGames.Enabled = true;
-                                            else rbnGames.Enabled = false;
+                                            gamesDbs.AddRange(psx);
 
-                                            rbnGames.Checked = true;
-                                            currentDatabase = gamesDbs;
-
-                                            cmbRegion.Items.Clear();
-
-
-                                            foreach (string s in regions)
-                                                cmbRegion.Items.Add(s);
-
-                                            foreach (var a in cmbRegion.CheckBoxItems)
-                                                a.Checked = true;
-
-                                            foreach (var a in cmbType.CheckBoxItems)
-                                                a.Checked = true;
-
-
-                                            // Populate DLC Parent Titles
-                                            foreach (var item in dlcsDbs)
+                                            Invoke(new Action(() =>
                                             {
-                                                var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
-                                                item.ParentGameTitle = result ?? string.Empty;
-                                            }
+                                                if (gamesDbs.Count > 0)
+                                                    rbnGames.Enabled = true;
+                                                else rbnGames.Enabled = false;
 
-                                            cmbRegion.CheckBoxCheckedChanged += txtSearch_TextChanged;
-                                            cmbType.CheckBoxCheckedChanged += txtSearch_TextChanged;
-                                            txtSearch_TextChanged(null, null);
-                                        }));
+                                                if (dlcsDbs.Count > 0)
+                                                    rbnDLC.Enabled = true;
+                                                else rbnDLC.Enabled = false;
 
-                                    }, DatabaseType.ItsPSX);
-                                }, DatabaseType.PS3);
-                            }, DatabaseType.ItsPsm);
-                        }, DatabaseType.Vita);
-                    }, DatabaseType.PSP);
+                                                rbnGames.Checked = true;
+                                                currentDatabase = gamesDbs;
+
+                                                cmbRegion.Items.Clear();
+
+
+                                                foreach (string s in regions)
+                                                    cmbRegion.Items.Add(s);
+
+                                                foreach (var a in cmbRegion.CheckBoxItems)
+                                                    a.Checked = true;
+
+                                                foreach (var a in cmbType.CheckBoxItems)
+                                                    a.Checked = true;
+
+
+                                                // Populate DLC Parent Titles
+                                                foreach (var item in dlcsDbs)
+                                                {
+                                                    var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
+                                                    item.ParentGameTitle = result ?? string.Empty;
+                                                }
+
+                                                cmbRegion.CheckBoxCheckedChanged += txtSearch_TextChanged;
+                                                cmbType.CheckBoxCheckedChanged += txtSearch_TextChanged;
+                                                txtSearch_TextChanged(null, null);
+                                            }));
+
+                                        }, DatabaseType.ItsPSX);
+                                    }, DatabaseType.PS3);
+                                }, DatabaseType.ItsPsm);
+                            }, DatabaseType.Vita);
+                        }, DatabaseType.PSP);
+                    }, DatabaseType.PSPDLC);
                 }, DatabaseType.PS3DLC);
             }, DatabaseType.ItsDlc);
 
@@ -300,13 +302,25 @@ namespace NPS
                                     DateTime.TryParse(a[6], out itm.lastModifyDate);
                                 }
                             }
+                            else if (dbType == DatabaseType.PSPDLC)
+                            {
+                                itm.zRif = "";
+                                itm.ContentId = a[4];
+                                itm.IsDLC = true;
+                                itm.ItsPsp = true;
+                                itm.contentType = "PSP";
+                                if (a.Length >= 7)
+                                {
+                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                }
+                            }
 
                             if ((!itm.zRif.ToLower().Contains("missing")) && (itm.pkg.ToLower().Contains("http://")
                             || itm.pkg.ToLower().Contains("https://")))
                             {
                                 if (itm.zRif.ToLower().Contains("not required")) itm.zRif = "";
 
-                                if (dbType == DatabaseType.Vita || dbType == DatabaseType.PS3)
+                                if (dbType == DatabaseType.Vita || dbType == DatabaseType.PS3 || dbType == DatabaseType.PSP)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
 
 
@@ -802,7 +816,10 @@ namespace NPS
             d.Show();
         }
 
+        private void cmbType_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 
     class Release

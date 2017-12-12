@@ -32,14 +32,14 @@ namespace NPS
             textDownload.Text = Settings.Instance.downloadDir;
             textPKGPath.Text = Settings.Instance.pkgPath;
             textParams.Text = Settings.Instance.pkgParams;
-            textBox1.Text = Settings.Instance.GamesUri;
-            textBox2.Text = Settings.Instance.DLCUri;
+            tb_psvuri.Text = Settings.Instance.GamesUri;
+            tb_psvdlcuri.Text = Settings.Instance.DLCUri;
             checkBox1.Checked = Settings.Instance.deleteAfterUnpack;
             numericUpDown1.Value = Settings.Instance.simultaneousDl;
-            textBox3.Text = Settings.Instance.PSMUri;
-            textBox4.Text = Settings.Instance.PSXUri;
-            textBox5.Text = Settings.Instance.PSPUri;
-            textBox6.Text = Settings.Instance.PSPDLCUri;
+            tb_psmuri.Text = Settings.Instance.PSMUri;
+            tb_psxuri.Text = Settings.Instance.PSXUri;
+            tb_pspuri.Text = Settings.Instance.PSPUri;
+            tb_pspdlcuri.Text = Settings.Instance.PSPDLCUri;
             tb_ps3uri.Text = Settings.Instance.PS3Uri;
             tb_ps3dlcuri.Text = Settings.Instance.PS3DLCUri;
         }
@@ -89,26 +89,26 @@ namespace NPS
         void UpdateSettings(bool withStoring)
         {
             Settings.Instance.pkgParams = textParams.Text;
-            Settings.Instance.GamesUri = textBox1.Text;
-            Settings.Instance.DLCUri = textBox2.Text;
-            Settings.Instance.PSMUri = textBox3.Text;
-            Settings.Instance.PSXUri = textBox4.Text;
-            Settings.Instance.PSPUri = textBox5.Text;
-            Settings.Instance.PSPDLCUri = textBox6.Text;
+            Settings.Instance.GamesUri = tb_psvuri.Text;
+            Settings.Instance.DLCUri = tb_psvdlcuri.Text;
+            Settings.Instance.PSMUri = tb_psmuri.Text;
+            Settings.Instance.PSXUri = tb_psxuri.Text;
+            Settings.Instance.PSPUri = tb_pspuri.Text;
+            Settings.Instance.PSPDLCUri = tb_pspdlcuri.Text;
             Settings.Instance.PS3Uri = tb_ps3uri.Text;
             Settings.Instance.PS3DLCUri = tb_ps3dlcuri.Text;
             if (withStoring)
                 Settings.Instance.Store();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btn_psvuri_Click(object sender, EventArgs e)
         {
-            ShowOpenFileWindow(textBox1);
+            ShowOpenFileWindow(tb_psvuri);
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btn_psvdlcuri_Click(object sender, EventArgs e)
         {
-            ShowOpenFileWindow(textBox2);
+            ShowOpenFileWindow(tb_psvdlcuri);
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -122,9 +122,9 @@ namespace NPS
         }
 
 
-        private void button5_Click(object sender, EventArgs e)
+        private void btn_psmuri_Click(object sender, EventArgs e)
         {
-            ShowOpenFileWindow(textBox3);
+            ShowOpenFileWindow(tb_psmuri);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -137,24 +137,29 @@ namespace NPS
 - {titleID}");
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void btn_psxuri_Click(object sender, EventArgs e)
         {
-            ShowOpenFileWindow(textBox4);
+            ShowOpenFileWindow(tb_psxuri);
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void btn_pspuri_Click(object sender, EventArgs e)
         {
-            ShowOpenFileWindow(textBox5);
+            ShowOpenFileWindow(tb_pspuri);
         }
 
-        private void button8_Click(object sender, EventArgs e)
-        {
-            ShowOpenFileWindow(textBox6);
-        }
-
-        private void button9_Click(object sender, EventArgs e)
+        private void btn_ps3uri_Click(object sender, EventArgs e)
         {
             ShowOpenFileWindow(tb_ps3uri);
+        }
+
+        private void btn_ps3dlcuri_Click(object sender, EventArgs e)
+        {
+            ShowOpenFileWindow(tb_ps3dlcuri);
+        }
+
+        private void btn_pspdlcuri_Click(object sender, EventArgs e)
+        {
+            ShowOpenFileWindow(tb_pspdlcuri);
         }
 
         void ShowOpenFileWindow(TextBox tb)
@@ -172,11 +177,6 @@ namespace NPS
                 }
             }
 
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            ShowOpenFileWindow(tb_ps3dlcuri);
         }
 
         private void button_export(object sender, EventArgs e)
