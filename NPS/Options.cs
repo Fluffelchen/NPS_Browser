@@ -52,7 +52,7 @@ namespace NPS
 			tb_psvthmuri.Text = Settings.Instance.ThemeUri;
 
 			// Update URIs
-			//tb_psvupduri.Text = Settings.Instance.UpdateUri;
+			tb_psvupduri.Text = Settings.Instance.UpdateUri;
 		}
 
         private void button1_Click(object sender, EventArgs e)
@@ -124,23 +124,73 @@ namespace NPS
 			Settings.Instance.ThemeUri = tb_psvthmuri.Text;
 
 			// Update URIs
-			//Settings.Instance.UpdateUri = tb_psvupduri.Text;
+			Settings.Instance.UpdateUri = tb_psvupduri.Text;
 
 			if (withStoring)
                 Settings.Instance.Store();
         }
 
-        private void btn_psvuri_Click(object sender, EventArgs e)
-        {
-            ShowOpenFileWindow(tb_psvuri);
-        }
+		private void btn_psvuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_psvuri);
+		}
 
-        private void btn_psvdlcuri_Click(object sender, EventArgs e)
+		private void btn_psmuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_psmuri);
+		}
+
+		private void btn_psxuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_psxuri);
+		}
+
+		private void btn_ps3uri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_ps3uri);
+		}
+
+		private void btn_pspuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_pspuri);
+		}
+
+		private void btn_psvdlcuri_Click(object sender, EventArgs e)
         {
             ShowOpenFileWindow(tb_psvdlcuri);
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+		private void btn_ps3dlcuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_ps3dlcuri);
+		}
+
+		private void btn_pspdlcuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_pspdlcuri);
+		}
+
+		private void btn_psvthmuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_psvthmuri);
+		}
+
+		private void btn_ps3thmuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_ps3thmuri);
+		}
+
+		private void btn_pspthmuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_pspthmuri);
+		}
+
+		private void btn_psvupduri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_psvupduri);
+		}
+
+		private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Instance.deleteAfterUnpack = checkBox1.Checked;
         }
@@ -148,11 +198,6 @@ namespace NPS
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             Settings.Instance.simultaneousDl = (int)numericUpDown1.Value;
-        }
-
-        private void btn_psmuri_Click(object sender, EventArgs e)
-        {
-            ShowOpenFileWindow(tb_psmuri);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -163,31 +208,6 @@ namespace NPS
 - {gameTitle}
 - {region}
 - {titleID}");
-        }
-
-        private void btn_psxuri_Click(object sender, EventArgs e)
-        {
-            ShowOpenFileWindow(tb_psxuri);
-        }
-
-        private void btn_pspuri_Click(object sender, EventArgs e)
-        {
-            ShowOpenFileWindow(tb_pspuri);
-        }
-
-        private void btn_ps3uri_Click(object sender, EventArgs e)
-        {
-            ShowOpenFileWindow(tb_ps3uri);
-        }
-
-        private void btn_ps3dlcuri_Click(object sender, EventArgs e)
-        {
-            ShowOpenFileWindow(tb_ps3dlcuri);
-        }
-
-        private void btn_pspdlcuri_Click(object sender, EventArgs e)
-        {
-            ShowOpenFileWindow(tb_pspdlcuri);
         }
 
         void ShowOpenFileWindow(TextBox tb)

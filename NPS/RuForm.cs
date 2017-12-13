@@ -115,6 +115,10 @@ namespace NPS
 			{
 			themesDbs.AddRange(psvthm);
 
+			LoadDatabase(Settings.Instance.UpdateUri, (psvupd) =>
+			{
+			updatesDbs.AddRange(psvupd);
+
 			Invoke(new Action(() =>
 			{
 				if (gamesDbs.Count > 0)
@@ -128,6 +132,10 @@ namespace NPS
 				if (themesDbs.Count > 0)
 					rbnThemes.Enabled = true;
 				else rbnThemes.Enabled = false;
+
+				if (updatesDbs.Count > 0)
+					rbnUpdates.Enabled = true;
+				else rbnUpdates.Enabled = false;
 
 				rbnGames.Checked = true;
 				currentDatabase = gamesDbs;
@@ -155,6 +163,7 @@ namespace NPS
 				txtSearch_TextChanged(null, null);
 			}));
 
+			}, DatabaseType.ItsUpdate);
 			}, DatabaseType.ItsTheme);
 			}, DatabaseType.PSPTheme);
 			}, DatabaseType.PS3Theme);
@@ -366,6 +375,19 @@ namespace NPS
 									DateTime.TryParse(a[6], out itm.lastModifyDate);
 								}
 							}
+							else if (dbType == DatabaseType.ItsUpdate)
+							{
+								itm.pkg = a[5];
+								itm.zRif = "";
+								itm.ContentId = a[3] + "-" + a[4];
+								itm.IsUpdate = true;
+								itm.ItsPS3 = true;
+								itm.contentType = "VITA";
+								if (a.Length >= 8)
+								{
+									DateTime.TryParse(a[7], out itm.lastModifyDate);
+								}
+							}
 
 							if ((!itm.zRif.ToLower().Contains("missing")) && (itm.pkg.ToLower().Contains("http://")
                             || itm.pkg.ToLower().Contains("https://")))
@@ -423,9 +445,10 @@ namespace NPS
             lstTitles.EndUpdate();
 
             string type = "";
-            if (rbnGames.Checked) type = "Games";
-            else if (rbnDLC.Checked) type = "DLCs";
+			if (rbnGames.Checked) type = "Games";
+			else if (rbnDLC.Checked) type = "DLCs";
 			else if (rbnThemes.Checked) type = "Themes";
+			else if (rbnUpdates.Checked) type = "Updates";
 			//else if (rbnPSM.Checked) type = "PSM Games";
 			//else if (rbnPSX.Checked) type = "PSX Games";
 
@@ -443,12 +466,9 @@ namespace NPS
                 DownloadWorker dw = ((lstItm as ListViewItem).Tag as DownloadWorker);
 
                 History.I.currentlyDownloading.Add(dw);
-
             }
 
             History.I.Save();
-
-
         }
 
         // Menu
@@ -520,6 +540,15 @@ namespace NPS
 			if (rbnThemes.Checked)
 			{
 				currentDatabase = themesDbs;
+				txtSearch_TextChanged(null, null);
+			}
+		}
+
+		private void rbnUpdates_CheckedChanged(object sender, EventArgs e)
+		{
+			if (rbnUpdates.Checked)
+			{
+				currentDatabase = updatesDbs;
 				txtSearch_TextChanged(null, null);
 			}
 		}
@@ -893,5 +922,5 @@ namespace NPS
         public string browser_download_url = "";
     }
 
-    enum DatabaseType { Vita, ItsDlc, ItsPsm, ItsPSX, PSPDLC, PSP, PS3, PS3DLC, ItsTheme, PS3Theme, PSPTheme }
+    enum DatabaseType { Vita, ItsDlc, ItsPsm, ItsPSX, PSPDLC, PSP, PS3, PS3DLC, ItsTheme, PS3Theme, PSPTheme, ItsUpdate }
 }

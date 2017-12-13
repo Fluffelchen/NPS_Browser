@@ -29,8 +29,8 @@ namespace NPS
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
-			PresentationControls.CheckBoxProperties checkBoxProperties3 = new PresentationControls.CheckBoxProperties();
 			PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
+			PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
 			this.mnuMain = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,6 +75,7 @@ namespace NPS
 			this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
 			this.lblCount = new System.Windows.Forms.Label();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.rbnThemes = new System.Windows.Forms.RadioButton();
 			this.lb_ps3licenseType = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.pauseResumeLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
@@ -85,7 +86,7 @@ namespace NPS
 			this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colDownloadStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.rbnThemes = new System.Windows.Forms.RadioButton();
+			this.rbnUpdates = new System.Windows.Forms.RadioButton();
 			this.mnuMain.SuspendLayout();
 			this.lstTitlesMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ptbCover)).BeginInit();
@@ -309,18 +310,6 @@ namespace NPS
 			this.rbnDLC.UseVisualStyleBackColor = true;
 			this.rbnDLC.CheckedChanged += new System.EventHandler(this.rbnDLC_CheckedChanged);
 			// 
-			// radioButton1
-			// 
-			this.rbnThemes.AutoSize = true;
-			this.rbnThemes.Enabled = false;
-			this.rbnThemes.Location = new System.Drawing.Point(185, 3);
-			this.rbnThemes.Name = "rbnThemes";
-			this.rbnThemes.Size = new System.Drawing.Size(63, 17);
-			this.rbnThemes.TabIndex = 10;
-			this.rbnThemes.Text = "Themes";
-			this.rbnThemes.UseVisualStyleBackColor = true;
-			this.rbnThemes.CheckedChanged += new System.EventHandler(this.rbnThemes_CheckedChanged);
-			// 
 			// label4
 			// 
 			this.label4.Location = new System.Drawing.Point(3, 3);
@@ -498,9 +487,9 @@ namespace NPS
 			// cmbType
 			// 
 			this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			checkBoxProperties3.AutoSize = true;
-			checkBoxProperties3.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.cmbType.CheckBoxProperties = checkBoxProperties3;
+			checkBoxProperties1.AutoSize = true;
+			checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.cmbType.CheckBoxProperties = checkBoxProperties1;
 			this.cmbType.DisplayMemberSingleItem = "";
 			this.cmbType.FormattingEnabled = true;
 			this.cmbType.Items.AddRange(new object[] {
@@ -521,9 +510,9 @@ namespace NPS
 			// cmbRegion
 			// 
 			this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			checkBoxProperties1.AutoSize = true;
-			checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.cmbRegion.CheckBoxProperties = checkBoxProperties1;
+			checkBoxProperties2.AutoSize = true;
+			checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
 			this.cmbRegion.DisplayMemberSingleItem = "";
 			this.cmbRegion.FormattingEnabled = true;
 			this.cmbRegion.Location = new System.Drawing.Point(707, 3);
@@ -560,11 +549,24 @@ namespace NPS
 			this.flowLayoutPanel1.Controls.Add(this.rbnGames);
 			this.flowLayoutPanel1.Controls.Add(this.rbnDLC);
 			this.flowLayoutPanel1.Controls.Add(this.rbnThemes);
+			this.flowLayoutPanel1.Controls.Add(this.rbnUpdates);
 			this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 26);
 			this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
 			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
 			this.flowLayoutPanel1.Size = new System.Drawing.Size(686, 23);
 			this.flowLayoutPanel1.TabIndex = 17;
+			// 
+			// rbnThemes
+			// 
+			this.rbnThemes.AutoSize = true;
+			this.rbnThemes.Enabled = false;
+			this.rbnThemes.Location = new System.Drawing.Point(185, 3);
+			this.rbnThemes.Name = "rbnThemes";
+			this.rbnThemes.Size = new System.Drawing.Size(63, 17);
+			this.rbnThemes.TabIndex = 10;
+			this.rbnThemes.Text = "Themes";
+			this.rbnThemes.UseVisualStyleBackColor = true;
+			this.rbnThemes.CheckedChanged += new System.EventHandler(this.rbnThemes_CheckedChanged);
 			// 
 			// lb_ps3licenseType
 			// 
@@ -671,6 +673,18 @@ namespace NPS
 			this.colDownloadProgress.Text = "Progress";
 			this.colDownloadProgress.Width = 366;
 			// 
+			// rbnUpdates
+			// 
+			this.rbnUpdates.AutoSize = true;
+			this.rbnUpdates.Enabled = false;
+			this.rbnUpdates.Location = new System.Drawing.Point(254, 3);
+			this.rbnUpdates.Name = "rbnUpdates";
+			this.rbnUpdates.Size = new System.Drawing.Size(65, 17);
+			this.rbnUpdates.TabIndex = 12;
+			this.rbnUpdates.Text = "Updates";
+			this.rbnUpdates.UseVisualStyleBackColor = true;
+			this.rbnUpdates.CheckedChanged += new System.EventHandler(this.rbnUpdates_CheckedChanged);
+			// 
 			// NPSBrowser
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -770,6 +784,7 @@ namespace NPS
         private System.Windows.Forms.ToolStripMenuItem showDescriptionPanelToolStripMenuItem;
         private System.Windows.Forms.Label lb_ps3licenseType;
 		private System.Windows.Forms.RadioButton rbnThemes;
+		private System.Windows.Forms.RadioButton rbnUpdates;
 	}
 }
 

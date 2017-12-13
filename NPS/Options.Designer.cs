@@ -80,16 +80,21 @@ namespace NPS
 			this.tb_psvthmuri = new System.Windows.Forms.TextBox();
 			this.btn_psvthmuri = new System.Windows.Forms.Button();
 			this.tb_ps3thmuri = new System.Windows.Forms.TextBox();
+			this.groupBox5 = new System.Windows.Forms.GroupBox();
+			this.lbl_psvupduri = new System.Windows.Forms.Label();
+			this.tb_psvupduri = new System.Windows.Forms.TextBox();
+			this.btn_psvupduri = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.groupBox3.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox4.SuspendLayout();
+			this.groupBox5.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// buttonDownload
 			// 
-			this.buttonDownload.Location = new System.Drawing.Point(510, 435);
+			this.buttonDownload.Location = new System.Drawing.Point(510, 491);
 			this.buttonDownload.Name = "buttonDownload";
 			this.buttonDownload.Size = new System.Drawing.Size(75, 23);
 			this.buttonDownload.TabIndex = 4;
@@ -99,7 +104,7 @@ namespace NPS
 			// 
 			// textDownload
 			// 
-			this.textDownload.Location = new System.Drawing.Point(156, 438);
+			this.textDownload.Location = new System.Drawing.Point(156, 494);
 			this.textDownload.Name = "textDownload";
 			this.textDownload.Size = new System.Drawing.Size(351, 20);
 			this.textDownload.TabIndex = 3;
@@ -107,7 +112,7 @@ namespace NPS
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(9, 441);
+			this.label1.Location = new System.Drawing.Point(9, 497);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(129, 13);
 			this.label1.TabIndex = 2;
@@ -116,7 +121,7 @@ namespace NPS
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(9, 467);
+			this.label2.Location = new System.Drawing.Point(9, 523);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(87, 13);
 			this.label2.TabIndex = 5;
@@ -124,14 +129,14 @@ namespace NPS
 			// 
 			// textPKGPath
 			// 
-			this.textPKGPath.Location = new System.Drawing.Point(156, 464);
+			this.textPKGPath.Location = new System.Drawing.Point(156, 520);
 			this.textPKGPath.Name = "textPKGPath";
 			this.textPKGPath.Size = new System.Drawing.Size(351, 20);
 			this.textPKGPath.TabIndex = 5;
 			// 
 			// buttonPKGPath
 			// 
-			this.buttonPKGPath.Location = new System.Drawing.Point(510, 462);
+			this.buttonPKGPath.Location = new System.Drawing.Point(510, 518);
 			this.buttonPKGPath.Name = "buttonPKGPath";
 			this.buttonPKGPath.Size = new System.Drawing.Size(75, 23);
 			this.buttonPKGPath.TabIndex = 6;
@@ -141,7 +146,7 @@ namespace NPS
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(9, 490);
+			this.label3.Location = new System.Drawing.Point(9, 546);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(141, 35);
 			this.label3.TabIndex = 8;
@@ -149,7 +154,7 @@ namespace NPS
 			// 
 			// textParams
 			// 
-			this.textParams.Location = new System.Drawing.Point(156, 490);
+			this.textParams.Location = new System.Drawing.Point(156, 546);
 			this.textParams.Name = "textParams";
 			this.textParams.Size = new System.Drawing.Size(351, 20);
 			this.textParams.TabIndex = 7;
@@ -213,7 +218,7 @@ namespace NPS
 			// checkBox1
 			// 
 			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(156, 516);
+			this.checkBox1.Location = new System.Drawing.Point(156, 572);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(198, 17);
 			this.checkBox1.TabIndex = 9;
@@ -223,7 +228,7 @@ namespace NPS
 			// 
 			// label6
 			// 
-			this.label6.Location = new System.Drawing.Point(9, 540);
+			this.label6.Location = new System.Drawing.Point(9, 596);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(141, 20);
 			this.label6.TabIndex = 16;
@@ -231,7 +236,7 @@ namespace NPS
 			// 
 			// numericUpDown1
 			// 
-			this.numericUpDown1.Location = new System.Drawing.Point(156, 538);
+			this.numericUpDown1.Location = new System.Drawing.Point(156, 594);
 			this.numericUpDown1.Maximum = new decimal(new int[] {
             15,
             0,
@@ -281,7 +286,7 @@ namespace NPS
 			// linkLabel1
 			// 
 			this.linkLabel1.AutoSize = true;
-			this.linkLabel1.Location = new System.Drawing.Point(513, 493);
+			this.linkLabel1.Location = new System.Drawing.Point(513, 549);
 			this.linkLabel1.Name = "linkLabel1";
 			this.linkLabel1.Size = new System.Drawing.Size(13, 13);
 			this.linkLabel1.TabIndex = 8;
@@ -415,12 +420,13 @@ namespace NPS
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.groupBox5);
 			this.groupBox1.Controls.Add(this.groupBox4);
 			this.groupBox1.Controls.Add(this.groupBox3);
 			this.groupBox1.Controls.Add(this.groupBox2);
 			this.groupBox1.Location = new System.Drawing.Point(12, 41);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(585, 387);
+			this.groupBox1.Size = new System.Drawing.Size(585, 443);
 			this.groupBox1.TabIndex = 2;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "TSV files or URL links";
@@ -519,6 +525,7 @@ namespace NPS
 			this.btn_pspthmuri.TabIndex = 38;
 			this.btn_pspthmuri.Text = "Browse";
 			this.btn_pspthmuri.UseVisualStyleBackColor = true;
+			this.btn_pspthmuri.Click += new System.EventHandler(this.btn_pspthmuri_Click);
 			// 
 			// lbl_pspthmuri
 			// 
@@ -553,6 +560,7 @@ namespace NPS
 			this.btn_ps3thmuri.TabIndex = 3;
 			this.btn_ps3thmuri.Text = "Browse";
 			this.btn_ps3thmuri.UseVisualStyleBackColor = true;
+			this.btn_ps3thmuri.Click += new System.EventHandler(this.btn_ps3thmuri_Click);
 			// 
 			// lbl_ps3thmuri
 			// 
@@ -578,6 +586,7 @@ namespace NPS
 			this.btn_psvthmuri.TabIndex = 1;
 			this.btn_psvthmuri.Text = "Browse";
 			this.btn_psvthmuri.UseVisualStyleBackColor = true;
+			this.btn_psvthmuri.Click += new System.EventHandler(this.btn_psvthmuri_Click);
 			// 
 			// tb_ps3thmuri
 			// 
@@ -586,9 +595,47 @@ namespace NPS
 			this.tb_ps3thmuri.Size = new System.Drawing.Size(414, 20);
 			this.tb_ps3thmuri.TabIndex = 2;
 			// 
+			// groupBox5
+			// 
+			this.groupBox5.Controls.Add(this.lbl_psvupduri);
+			this.groupBox5.Controls.Add(this.tb_psvupduri);
+			this.groupBox5.Controls.Add(this.btn_psvupduri);
+			this.groupBox5.Location = new System.Drawing.Point(7, 383);
+			this.groupBox5.Name = "groupBox5";
+			this.groupBox5.Size = new System.Drawing.Size(575, 53);
+			this.groupBox5.TabIndex = 3;
+			this.groupBox5.TabStop = false;
+			this.groupBox5.Text = "Updates";
+			// 
+			// lbl_psvupduri
+			// 
+			this.lbl_psvupduri.AutoSize = true;
+			this.lbl_psvupduri.Location = new System.Drawing.Point(5, 27);
+			this.lbl_psvupduri.Name = "lbl_psvupduri";
+			this.lbl_psvupduri.Size = new System.Drawing.Size(45, 13);
+			this.lbl_psvupduri.TabIndex = 14;
+			this.lbl_psvupduri.Text = "PSV tsv";
+			// 
+			// tb_psvupduri
+			// 
+			this.tb_psvupduri.Location = new System.Drawing.Point(77, 24);
+			this.tb_psvupduri.Name = "tb_psvupduri";
+			this.tb_psvupduri.Size = new System.Drawing.Size(414, 20);
+			this.tb_psvupduri.TabIndex = 0;
+			// 
+			// btn_psvupduri
+			// 
+			this.btn_psvupduri.Location = new System.Drawing.Point(494, 22);
+			this.btn_psvupduri.Name = "btn_psvupduri";
+			this.btn_psvupduri.Size = new System.Drawing.Size(75, 23);
+			this.btn_psvupduri.TabIndex = 1;
+			this.btn_psvupduri.Text = "Browse";
+			this.btn_psvupduri.UseVisualStyleBackColor = true;
+			this.btn_psvupduri.Click += new System.EventHandler(this.btn_psvupduri_Click);
+			// 
 			// Options
 			// 
-			this.ClientSize = new System.Drawing.Size(603, 584);
+			this.ClientSize = new System.Drawing.Size(603, 626);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.buttonImport);
 			this.Controls.Add(this.buttonExport);
@@ -618,6 +665,8 @@ namespace NPS
 			this.groupBox2.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox4.PerformLayout();
+			this.groupBox5.ResumeLayout(false);
+			this.groupBox5.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -682,6 +731,10 @@ namespace NPS
 		private System.Windows.Forms.TextBox tb_psvthmuri;
 		private System.Windows.Forms.Button btn_psvthmuri;
 		private System.Windows.Forms.TextBox tb_ps3thmuri;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.Label lbl_psvupduri;
+		private System.Windows.Forms.TextBox tb_psvupduri;
+		private System.Windows.Forms.Button btn_psvupduri;
 	}
 }
 
