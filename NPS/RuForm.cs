@@ -379,7 +379,7 @@ namespace NPS
 							{
 								itm.pkg = a[5];
 								itm.zRif = "";
-								itm.ContentId = a[3] + "-" + a[4];
+								itm.ContentId = a[0] + "[" + a[3] + "-" + a[4] + "]";
 								itm.IsUpdate = true;
 								itm.ItsPS3 = true;
 								itm.contentType = "VITA";
