@@ -382,7 +382,6 @@ namespace NPS
 								itm.zRif = "";
 								itm.ContentId = Path.GetFileNameWithoutExtension(a[5]);
 								itm.IsUpdate = true;
-								itm.ItsPS3 = true;
 								itm.contentType = "VITA";
 								if (a.Length >= 8)
 								{
