@@ -380,7 +380,7 @@ namespace NPS
 								itm.TitleName += "[" + a[3] + "-" + a[4] + "]";
 								itm.pkg = a[5];
 								itm.zRif = "";
-								itm.ContentId = a[0] + "[" + a[3] + "-" + a[4] + "]";
+								itm.ContentId = Path.GetFileNameWithoutExtension(a[5]);
 								itm.IsUpdate = true;
 								itm.ItsPS3 = true;
 								itm.contentType = "VITA";
