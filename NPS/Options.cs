@@ -15,8 +15,6 @@ namespace NPS
 {
     public partial class Options : Form
     {
-
-
         public Options()
         {
             InitializeComponent();
@@ -49,9 +47,9 @@ namespace NPS
 			tb_psvdlcuri.Text = Settings.Instance.DLCUri;
 
 			// Theme URIs
-			//tb_ps3thmuri.Text = Settings.Instance.PS3ThemeUri;
-			//tb_pspthmuri.Text = Settings.Instance.PSPThemeUri;
-			//tb_psvthmuri.Text = Settings.Instance.ThemeUri;
+			tb_ps3thmuri.Text = Settings.Instance.PS3ThemeUri;
+			tb_pspthmuri.Text = Settings.Instance.PSPThemeUri;
+			tb_psvthmuri.Text = Settings.Instance.ThemeUri;
 
 			// Update URIs
 			//tb_psvupduri.Text = Settings.Instance.UpdateUri;
@@ -101,16 +99,34 @@ namespace NPS
 
         void UpdateSettings(bool withStoring)
         {
-            Settings.Instance.pkgParams = textParams.Text;
-            Settings.Instance.GamesUri = tb_psvuri.Text;
-            Settings.Instance.DLCUri = tb_psvdlcuri.Text;
-            Settings.Instance.PSMUri = tb_psmuri.Text;
-            Settings.Instance.PSXUri = tb_psxuri.Text;
-            Settings.Instance.PSPUri = tb_pspuri.Text;
-            Settings.Instance.PSPDLCUri = tb_pspdlcuri.Text;
-            Settings.Instance.PS3Uri = tb_ps3uri.Text;
-            Settings.Instance.PS3DLCUri = tb_ps3dlcuri.Text;
-            if (withStoring)
+			// Settings
+			Settings.Instance.downloadDir = textDownload.Text;
+			Settings.Instance.pkgPath = textPKGPath.Text;
+			Settings.Instance.pkgParams = textParams.Text;
+			Settings.Instance.deleteAfterUnpack = checkBox1.Checked;
+			Settings.Instance.simultaneousDl = (int)numericUpDown1.Value;
+
+			// Game URIs
+			Settings.Instance.PS3Uri = tb_ps3uri.Text;
+			Settings.Instance.PSMUri = tb_psmuri.Text;
+			Settings.Instance.PSPUri = tb_pspuri.Text;
+			Settings.Instance.GamesUri = tb_psvuri.Text;
+			Settings.Instance.PSXUri = tb_psxuri.Text;
+
+			// DLC URIs
+			Settings.Instance.PS3DLCUri = tb_ps3dlcuri.Text;
+			Settings.Instance.PSPDLCUri = tb_pspdlcuri.Text;
+			Settings.Instance.DLCUri = tb_psvdlcuri.Text;
+
+			// Theme URIs
+			Settings.Instance.PS3ThemeUri = tb_ps3thmuri.Text;
+			Settings.Instance.PSPThemeUri = tb_pspthmuri.Text;
+			Settings.Instance.ThemeUri = tb_psvthmuri.Text;
+
+			// Update URIs
+			//Settings.Instance.UpdateUri = tb_psvupduri.Text;
+
+			if (withStoring)
                 Settings.Instance.Store();
         }
 
@@ -133,7 +149,6 @@ namespace NPS
         {
             Settings.Instance.simultaneousDl = (int)numericUpDown1.Value;
         }
-
 
         private void btn_psmuri_Click(object sender, EventArgs e)
         {
@@ -177,7 +192,6 @@ namespace NPS
 
         void ShowOpenFileWindow(TextBox tb)
         {
-
             using (var fbd = new OpenFileDialog())
             {
                 fbd.Filter = "|*.tsv";
@@ -219,7 +233,6 @@ namespace NPS
 
         private void button_import(object sender, EventArgs e)
         {
-
             using (var fbd = new OpenFileDialog())
             {
                 fbd.Filter = "|*.npsSettings";
@@ -238,8 +251,6 @@ namespace NPS
                     }
                 }
             }
-
-
         }
     }
 }
