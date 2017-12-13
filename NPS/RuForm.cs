@@ -377,6 +377,7 @@ namespace NPS
 							}
 							else if (dbType == DatabaseType.ItsUpdate)
 							{
+								itm.TitleName += "[" + a[3] + "-" + a[4] + "]";
 								itm.pkg = a[5];
 								itm.zRif = "";
 								itm.ContentId = a[0] + "[" + a[3] + "-" + a[4] + "]";
