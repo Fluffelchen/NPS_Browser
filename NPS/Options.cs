@@ -29,20 +29,33 @@ namespace NPS
 
         void LoadSettings()
         {
-            textDownload.Text = Settings.Instance.downloadDir;
-            textPKGPath.Text = Settings.Instance.pkgPath;
-            textParams.Text = Settings.Instance.pkgParams;
-            tb_psvuri.Text = Settings.Instance.GamesUri;
-            tb_psvdlcuri.Text = Settings.Instance.DLCUri;
-            checkBox1.Checked = Settings.Instance.deleteAfterUnpack;
-            numericUpDown1.Value = Settings.Instance.simultaneousDl;
-            tb_psmuri.Text = Settings.Instance.PSMUri;
-            tb_psxuri.Text = Settings.Instance.PSXUri;
-            tb_pspuri.Text = Settings.Instance.PSPUri;
-            tb_pspdlcuri.Text = Settings.Instance.PSPDLCUri;
-            tb_ps3uri.Text = Settings.Instance.PS3Uri;
-            tb_ps3dlcuri.Text = Settings.Instance.PS3DLCUri;
-        }
+			// Settings
+			textDownload.Text = Settings.Instance.downloadDir;
+			textPKGPath.Text = Settings.Instance.pkgPath;
+			textParams.Text = Settings.Instance.pkgParams;
+			checkBox1.Checked = Settings.Instance.deleteAfterUnpack;
+			numericUpDown1.Value = Settings.Instance.simultaneousDl;
+
+			// Game URIs
+			tb_ps3uri.Text = Settings.Instance.PS3Uri;
+			tb_psmuri.Text = Settings.Instance.PSMUri;
+			tb_pspuri.Text = Settings.Instance.PSPUri;
+			tb_psvuri.Text = Settings.Instance.GamesUri;
+			tb_psxuri.Text = Settings.Instance.PSXUri;
+
+			// DLC URIs
+			tb_ps3dlcuri.Text = Settings.Instance.PS3DLCUri;
+			tb_pspdlcuri.Text = Settings.Instance.PSPDLCUri;
+			tb_psvdlcuri.Text = Settings.Instance.DLCUri;
+
+			// Theme URIs
+			//tb_ps3thmuri.Text = Settings.Instance.PS3ThemeUri;
+			//tb_pspthmuri.Text = Settings.Instance.PSPThemeUri;
+			//tb_psvthmuri.Text = Settings.Instance.ThemeUri;
+
+			// Update URIs
+			//tb_psvupduri.Text = Settings.Instance.UpdateUri;
+		}
 
         private void button1_Click(object sender, EventArgs e)
         {
