@@ -19,6 +19,8 @@ namespace NPS
         List<Item> dlcsDbs = new List<Item>();
         List<Item> psmDbs = new List<Item>();
         List<Item> psxDbs = new List<Item>();
+		List<Item> themesDbs = new List<Item>();
+		List<Item> updatesDbs = new List<Item>();
         HashSet<string> regions = new HashSet<string>();
         int currentOrderColumn = 0;
         bool currentOrderInverted = false;
@@ -72,84 +74,99 @@ namespace NPS
 
             LoadDatabase(Settings.Instance.DLCUri, (db) =>
             {
-                dlcsDbs.AddRange(db);
-                LoadDatabase(Settings.Instance.PS3DLCUri, (ps3dlc) =>
-                {
-                    dlcsDbs.AddRange(ps3dlc);
+			dlcsDbs.AddRange(db);
+			LoadDatabase(Settings.Instance.PS3DLCUri, (ps3dlc) =>
+			{
+			dlcsDbs.AddRange(ps3dlc);
 
-                    LoadDatabase(Settings.Instance.PSPDLCUri, (pspdlc) =>
-                    {
-                        dlcsDbs.AddRange(pspdlc);
+			LoadDatabase(Settings.Instance.PSPDLCUri, (pspdlc) =>
+			{
+			dlcsDbs.AddRange(pspdlc);
 
-                        LoadDatabase(Settings.Instance.PSPUri, (psp) =>
-                        {
-                            gamesDbs.AddRange(psp);
+			LoadDatabase(Settings.Instance.PSPUri, (psp) =>
+			{
+			gamesDbs.AddRange(psp);
 
-                            LoadDatabase(Settings.Instance.GamesUri, (vita) =>
-                            {
-                                gamesDbs.AddRange(vita);
+			LoadDatabase(Settings.Instance.GamesUri, (vita) =>
+			{
+			gamesDbs.AddRange(vita);
 
-                                LoadDatabase(Settings.Instance.PSMUri, (psm) =>
-                                {
-                                    gamesDbs.AddRange(psm);
+			LoadDatabase(Settings.Instance.PSMUri, (psm) =>
+			{
+			gamesDbs.AddRange(psm);
 
-                                    LoadDatabase(Settings.Instance.PS3Uri, (ps3) =>
-                                    {
-                                        gamesDbs.AddRange(ps3);
+			LoadDatabase(Settings.Instance.PS3Uri, (ps3) =>
+			{
+			gamesDbs.AddRange(ps3);
 
-                                        LoadDatabase(Settings.Instance.PSXUri, (psx) =>
-                                        {
-                                            gamesDbs.AddRange(psx);
+			LoadDatabase(Settings.Instance.PSXUri, (psx) =>
+			{
+			gamesDbs.AddRange(psx);
 
-                                            Invoke(new Action(() =>
-                                            {
-                                                if (gamesDbs.Count > 0)
-                                                    rbnGames.Enabled = true;
-                                                else rbnGames.Enabled = false;
+			LoadDatabase(Settings.Instance.PS3ThemeUri, (ps3thm) =>
+			{
+			themesDbs.AddRange(ps3thm);
+			
+			LoadDatabase(Settings.Instance.PSPThemeUri, (pspthm) =>
+			{
+			themesDbs.AddRange(pspthm);
 
-                                                if (dlcsDbs.Count > 0)
-                                                    rbnDLC.Enabled = true;
-                                                else rbnDLC.Enabled = false;
+			LoadDatabase(Settings.Instance.ThemeUri, (psvthm) =>
+			{
+			themesDbs.AddRange(psvthm);
 
-                                                rbnGames.Checked = true;
-                                                currentDatabase = gamesDbs;
+			Invoke(new Action(() =>
+			{
+				if (gamesDbs.Count > 0)
+					rbnGames.Enabled = true;
+				else rbnGames.Enabled = false;
 
-                                                cmbRegion.Items.Clear();
+				if (dlcsDbs.Count > 0)
+					rbnDLC.Enabled = true;
+				else rbnDLC.Enabled = false;
 
+				if (themesDbs.Count > 0)
+					rbnThemes.Enabled = true;
+				else rbnThemes.Enabled = false;
 
-                                                foreach (string s in regions)
-                                                    cmbRegion.Items.Add(s);
+				rbnGames.Checked = true;
+				currentDatabase = gamesDbs;
 
-                                                foreach (var a in cmbRegion.CheckBoxItems)
-                                                    a.Checked = true;
+				cmbRegion.Items.Clear();
 
-                                                foreach (var a in cmbType.CheckBoxItems)
-                                                    a.Checked = true;
+				foreach (string s in regions)
+					cmbRegion.Items.Add(s);
 
+				foreach (var a in cmbRegion.CheckBoxItems)
+					a.Checked = true;
 
-                                                // Populate DLC Parent Titles
-                                                foreach (var item in dlcsDbs)
-                                                {
-                                                    var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
-                                                    item.ParentGameTitle = result ?? string.Empty;
-                                                }
+				foreach (var a in cmbType.CheckBoxItems)
+					a.Checked = true;
 
-                                                cmbRegion.CheckBoxCheckedChanged += txtSearch_TextChanged;
-                                                cmbType.CheckBoxCheckedChanged += txtSearch_TextChanged;
-                                                txtSearch_TextChanged(null, null);
-                                            }));
+				// Populate DLC Parent Titles
+				foreach (var item in dlcsDbs)
+				{
+					var result = gamesDbs.FirstOrDefault(i => i.TitleId.StartsWith(item.TitleId.Substring(0, 9)))?.TitleName;
+					item.ParentGameTitle = result ?? string.Empty;
+				}
 
-                                        }, DatabaseType.ItsPSX);
-                                    }, DatabaseType.PS3);
-                                }, DatabaseType.ItsPsm);
-                            }, DatabaseType.Vita);
-                        }, DatabaseType.PSP);
-                    }, DatabaseType.PSPDLC);
-                }, DatabaseType.PS3DLC);
+				cmbRegion.CheckBoxCheckedChanged += txtSearch_TextChanged;
+				cmbType.CheckBoxCheckedChanged += txtSearch_TextChanged;
+				txtSearch_TextChanged(null, null);
+			}));
+
+			}, DatabaseType.ItsTheme);
+			}, DatabaseType.PSPTheme);
+			}, DatabaseType.PS3Theme);
+			}, DatabaseType.ItsPSX);
+			}, DatabaseType.PS3);
+			}, DatabaseType.ItsPsm);
+			}, DatabaseType.Vita);
+			}, DatabaseType.PSP);
+			}, DatabaseType.PSPDLC);
+			}, DatabaseType.PS3DLC);
             }, DatabaseType.ItsDlc);
-
         }
-
 
         void SetCheckboxState(List<Item> list, int id)
         {
@@ -314,16 +331,49 @@ namespace NPS
                                     DateTime.TryParse(a[6], out itm.lastModifyDate);
                                 }
                             }
+							else if (dbType == DatabaseType.ItsTheme)
+							{
+								itm.zRif = "";
+								itm.ContentId = a[4];
+								itm.IsTheme = true;
+								itm.contentType = "VITA";
+								if (a.Length >= 7)
+								{
+									DateTime.TryParse(a[6], out itm.lastModifyDate);
+								}
+							}
+							else if (dbType == DatabaseType.PSPTheme)
+							{
+								itm.zRif = "";
+								itm.ContentId = a[4];
+								itm.IsTheme = true;
+								itm.ItsPsp = true;
+								itm.contentType = "PSP";
+								if (a.Length >= 7)
+								{
+									DateTime.TryParse(a[6], out itm.lastModifyDate);
+								}
+							}
+							else if (dbType == DatabaseType.PS3Theme)
+							{
+								itm.zRif = "";
+								itm.ContentId = a[4];
+								itm.IsTheme = true;
+								itm.ItsPS3 = true;
+								itm.contentType = "PS3";
+								if (a.Length >= 7)
+								{
+									DateTime.TryParse(a[6], out itm.lastModifyDate);
+								}
+							}
 
-                            if ((!itm.zRif.ToLower().Contains("missing")) && (itm.pkg.ToLower().Contains("http://")
+							if ((!itm.zRif.ToLower().Contains("missing")) && (itm.pkg.ToLower().Contains("http://")
                             || itm.pkg.ToLower().Contains("https://")))
                             {
                                 if (itm.zRif.ToLower().Contains("not required")) itm.zRif = "";
 
                                 if (dbType == DatabaseType.Vita || dbType == DatabaseType.PS3 || dbType == DatabaseType.PSP)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
-
-
 
                                 dbs.Add(itm);
                                 regions.Add(itm.Region.Replace(" ", ""));
@@ -375,10 +425,11 @@ namespace NPS
             string type = "";
             if (rbnGames.Checked) type = "Games";
             else if (rbnDLC.Checked) type = "DLCs";
-            //else if (rbnPSM.Checked) type = "PSM Games";
-            //else if (rbnPSX.Checked) type = "PSX Games";
+			else if (rbnThemes.Checked) type = "Themes";
+			//else if (rbnPSM.Checked) type = "PSM Games";
+			//else if (rbnPSX.Checked) type = "PSX Games";
 
-            lblCount.Text = $"{list.Count}/{currentDatabase.Count} {type}";
+			lblCount.Text = $"{list.Count}/{currentDatabase.Count} {type}";
         }
 
         // Form
@@ -464,26 +515,35 @@ namespace NPS
             }
         }
 
-        //private void rbnPSM_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (rbnPSM.Checked)
-        //    {
-        //        currentDatabase = psmDbs;
-        //        txtSearch_TextChanged(null, null);
-        //    }
-        //}
+		private void rbnThemes_CheckedChanged(object sender, EventArgs e)
+		{
+			if (rbnThemes.Checked)
+			{
+				currentDatabase = themesDbs;
+				txtSearch_TextChanged(null, null);
+			}
+		}
 
-        //private void rbnPSX_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (rbnPSX.Checked)
-        //    {
-        //        currentDatabase = psxDbs;
-        //        txtSearch_TextChanged(null, null);
-        //    }
-        //}
+		//private void rbnPSM_CheckedChanged(object sender, EventArgs e)
+		//{
+		//    if (rbnPSM.Checked)
+		//    {
+		//        currentDatabase = psmDbs;
+		//        txtSearch_TextChanged(null, null);
+		//    }
+		//}
 
-        // Download
-        private void btnDownload_Click(object sender, EventArgs e)
+		//private void rbnPSX_CheckedChanged(object sender, EventArgs e)
+		//{
+		//    if (rbnPSX.Checked)
+		//    {
+		//        currentDatabase = psxDbs;
+		//        txtSearch_TextChanged(null, null);
+		//    }
+		//}
+
+		// Download
+		private void btnDownload_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(Settings.Instance.downloadDir) || string.IsNullOrEmpty(Settings.Instance.pkgPath))
             {
@@ -820,9 +880,9 @@ namespace NPS
         {
 
         }
-    }
+	}
 
-    class Release
+	class Release
     {
         public string tag_name = "";
         public Asset[] assets = null;
@@ -833,5 +893,5 @@ namespace NPS
         public string browser_download_url = "";
     }
 
-    enum DatabaseType { Vita, ItsDlc, ItsPsm, ItsPSX, PSPDLC, PSP, PS3, PS3DLC }
+    enum DatabaseType { Vita, ItsDlc, ItsPsm, ItsPSX, PSPDLC, PSP, PS3, PS3DLC, ItsTheme, PS3Theme, PSPTheme }
 }
