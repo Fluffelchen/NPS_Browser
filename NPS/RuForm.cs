@@ -70,25 +70,13 @@ namespace NPS
 
         private void LoadAllDatabaes(object sender, EventArgs e)
         {
+			avatarsDbs.Clear();
             dlcsDbs.Clear();
             gamesDbs.Clear();
+			themesDbs.Clear();
+			updatesDbs.Clear();
 
-            LoadDatabase(Settings.Instance.PSVDLCUri, (db) =>
-            {
-			dlcsDbs.AddRange(db);
-			
-			LoadDatabase(Settings.Instance.PS3DLCUri, (ps3dlc) =>
-			{
-			dlcsDbs.AddRange(ps3dlc);
-
-			LoadDatabase(Settings.Instance.PSPDLCUri, (pspdlc) =>
-			{
-			dlcsDbs.AddRange(pspdlc);
-
-			LoadDatabase(Settings.Instance.PSPUri, (psp) =>
-			{
-			gamesDbs.AddRange(psp);
-
+			// Game DBs
 			LoadDatabase(Settings.Instance.PSVUri, (vita) =>
 			{
 			gamesDbs.AddRange(vita);
@@ -97,35 +85,79 @@ namespace NPS
 			{
 			gamesDbs.AddRange(psm);
 
-			LoadDatabase(Settings.Instance.PS3Uri, (ps3) =>
-			{
-			gamesDbs.AddRange(ps3);
-
 			LoadDatabase(Settings.Instance.PSXUri, (psx) =>
 			{
 			gamesDbs.AddRange(psx);
 
-			LoadDatabase(Settings.Instance.PS3ThemeUri, (ps3thm) =>
+			LoadDatabase(Settings.Instance.PSPUri, (psp) =>
 			{
-			themesDbs.AddRange(ps3thm);
-			
-			LoadDatabase(Settings.Instance.PSPThemeUri, (pspthm) =>
-			{
-			themesDbs.AddRange(pspthm);
+			gamesDbs.AddRange(psp);
 
+			LoadDatabase(Settings.Instance.PS3Uri, (ps3) =>
+			{
+			gamesDbs.AddRange(ps3);
+
+			LoadDatabase(Settings.Instance.PS4Uri, (ps4) =>
+			{
+			gamesDbs.AddRange(ps4);
+
+			// Avatar DBs
+			LoadDatabase(Settings.Instance.PS3AvatarUri, (ps3avatar) =>
+			{
+			avatarsDbs.AddRange(ps3avatar);
+
+			// DLC DBs
+			LoadDatabase(Settings.Instance.PSVDLCUri, (db) =>
+            {
+			dlcsDbs.AddRange(db);
+
+			LoadDatabase(Settings.Instance.PSPDLCUri, (pspdlc) =>
+			{
+			dlcsDbs.AddRange(pspdlc);
+
+			LoadDatabase(Settings.Instance.PS3DLCUri, (ps3dlc) =>
+			{
+			dlcsDbs.AddRange(ps3dlc);
+
+			LoadDatabase(Settings.Instance.PS4DLCUri, (ps4dlc) =>
+			{
+			dlcsDbs.AddRange(ps4dlc);
+
+			// Theme DBs
 			LoadDatabase(Settings.Instance.PSVThemeUri, (psvthm) =>
 			{
 			themesDbs.AddRange(psvthm);
 
+			LoadDatabase(Settings.Instance.PSPThemeUri, (pspthm) =>
+			{
+			themesDbs.AddRange(pspthm);
+
+			LoadDatabase(Settings.Instance.PS3ThemeUri, (ps3thm) =>
+			{
+			themesDbs.AddRange(ps3thm);
+
+			LoadDatabase(Settings.Instance.PS4ThemeUri, (ps4thm) =>
+			{
+			themesDbs.AddRange(ps4thm);
+
+			// Update DBs
 			LoadDatabase(Settings.Instance.PSVUpdateUri, (psvupd) =>
 			{
 			updatesDbs.AddRange(psvupd);
+
+			LoadDatabase(Settings.Instance.PS4UpdateUri, (ps4upd) =>
+			{
+			updatesDbs.AddRange(ps4upd);
 
 			Invoke(new Action(() =>
 			{
 				if (gamesDbs.Count > 0)
 					rbnGames.Enabled = true;
 				else rbnGames.Enabled = false;
+
+				if (avatarsDbs.Count > 0)
+					rbnAvatars.Enabled = true;
+				else rbnAvatars.Enabled = false;
 
 				if (dlcsDbs.Count > 0)
 					rbnDLC.Enabled = true;
@@ -165,19 +197,33 @@ namespace NPS
 				txtSearch_TextChanged(null, null);
 			}));
 
+			// Update DBs
+			}, DatabaseType.PS4Update);
 			}, DatabaseType.VitaUpdate);
-			}, DatabaseType.VitaTheme);
-			}, DatabaseType.PSPTheme);
+
+			// Theme DBs
+			}, DatabaseType.PS4Theme);
 			}, DatabaseType.PS3Theme);
-			}, DatabaseType.ItsPSX);
+			}, DatabaseType.PSPTheme);
+			}, DatabaseType.VitaTheme);
+
+			// DLC DBs
+			}, DatabaseType.PS4DLC);
+			}, DatabaseType.PS3DLC);
+			}, DatabaseType.PSPDLC);
+			}, DatabaseType.VitaDLC);
+			
+			// Avatar DBs
+			}, DatabaseType.PS3Avatar);
+
+			// Game DBs
+			}, DatabaseType.PS4);
 			}, DatabaseType.PS3);
+			}, DatabaseType.PSP);
+			}, DatabaseType.ItsPSX);
 			}, DatabaseType.ItsPsm);
 			}, DatabaseType.Vita);
-			}, DatabaseType.PSP);
-			}, DatabaseType.PSPDLC);
-			}, DatabaseType.PS3DLC);
-            }, DatabaseType.VitaDLC);
-        }
+		}
 
         void SetCheckboxState(List<Item> list, int id)
         {

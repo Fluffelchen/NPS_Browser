@@ -29,8 +29,8 @@ namespace NPS
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
+			PresentationControls.CheckBoxProperties checkBoxProperties3 = new PresentationControls.CheckBoxProperties();
 			PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
-			PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
 			this.mnuMain = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +76,7 @@ namespace NPS
 			this.lblCount = new System.Windows.Forms.Label();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.rbnThemes = new System.Windows.Forms.RadioButton();
+			this.rbnUpdates = new System.Windows.Forms.RadioButton();
 			this.lb_ps3licenseType = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.pauseResumeLayoutPnl = new System.Windows.Forms.TableLayoutPanel();
@@ -86,7 +87,7 @@ namespace NPS
 			this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colDownloadStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.rbnUpdates = new System.Windows.Forms.RadioButton();
+			this.rbnAvatars = new System.Windows.Forms.RadioButton();
 			this.mnuMain.SuspendLayout();
 			this.lstTitlesMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ptbCover)).BeginInit();
@@ -302,7 +303,7 @@ namespace NPS
 			// 
 			this.rbnDLC.AutoSize = true;
 			this.rbnDLC.Enabled = false;
-			this.rbnDLC.Location = new System.Drawing.Point(133, 3);
+			this.rbnDLC.Location = new System.Drawing.Point(200, 3);
 			this.rbnDLC.Name = "rbnDLC";
 			this.rbnDLC.Size = new System.Drawing.Size(46, 17);
 			this.rbnDLC.TabIndex = 9;
@@ -487,9 +488,9 @@ namespace NPS
 			// cmbType
 			// 
 			this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			checkBoxProperties1.AutoSize = true;
-			checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.cmbType.CheckBoxProperties = checkBoxProperties1;
+			checkBoxProperties3.AutoSize = true;
+			checkBoxProperties3.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.cmbType.CheckBoxProperties = checkBoxProperties3;
 			this.cmbType.DisplayMemberSingleItem = "";
 			this.cmbType.FormattingEnabled = true;
 			this.cmbType.Items.AddRange(new object[] {
@@ -510,9 +511,9 @@ namespace NPS
 			// cmbRegion
 			// 
 			this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			checkBoxProperties2.AutoSize = true;
-			checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-			this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
+			checkBoxProperties1.AutoSize = true;
+			checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+			this.cmbRegion.CheckBoxProperties = checkBoxProperties1;
 			this.cmbRegion.DisplayMemberSingleItem = "";
 			this.cmbRegion.FormattingEnabled = true;
 			this.cmbRegion.Location = new System.Drawing.Point(707, 3);
@@ -547,6 +548,7 @@ namespace NPS
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.flowLayoutPanel1.Controls.Add(this.label4);
 			this.flowLayoutPanel1.Controls.Add(this.rbnGames);
+			this.flowLayoutPanel1.Controls.Add(this.rbnAvatars);
 			this.flowLayoutPanel1.Controls.Add(this.rbnDLC);
 			this.flowLayoutPanel1.Controls.Add(this.rbnThemes);
 			this.flowLayoutPanel1.Controls.Add(this.rbnUpdates);
@@ -560,13 +562,25 @@ namespace NPS
 			// 
 			this.rbnThemes.AutoSize = true;
 			this.rbnThemes.Enabled = false;
-			this.rbnThemes.Location = new System.Drawing.Point(185, 3);
+			this.rbnThemes.Location = new System.Drawing.Point(252, 3);
 			this.rbnThemes.Name = "rbnThemes";
 			this.rbnThemes.Size = new System.Drawing.Size(63, 17);
 			this.rbnThemes.TabIndex = 10;
 			this.rbnThemes.Text = "Themes";
 			this.rbnThemes.UseVisualStyleBackColor = true;
 			this.rbnThemes.CheckedChanged += new System.EventHandler(this.rbnThemes_CheckedChanged);
+			// 
+			// rbnUpdates
+			// 
+			this.rbnUpdates.AutoSize = true;
+			this.rbnUpdates.Enabled = false;
+			this.rbnUpdates.Location = new System.Drawing.Point(321, 3);
+			this.rbnUpdates.Name = "rbnUpdates";
+			this.rbnUpdates.Size = new System.Drawing.Size(65, 17);
+			this.rbnUpdates.TabIndex = 12;
+			this.rbnUpdates.Text = "Updates";
+			this.rbnUpdates.UseVisualStyleBackColor = true;
+			this.rbnUpdates.CheckedChanged += new System.EventHandler(this.rbnUpdates_CheckedChanged);
 			// 
 			// lb_ps3licenseType
 			// 
@@ -673,17 +687,16 @@ namespace NPS
 			this.colDownloadProgress.Text = "Progress";
 			this.colDownloadProgress.Width = 366;
 			// 
-			// rbnUpdates
+			// rbnAvatars
 			// 
-			this.rbnUpdates.AutoSize = true;
-			this.rbnUpdates.Enabled = false;
-			this.rbnUpdates.Location = new System.Drawing.Point(254, 3);
-			this.rbnUpdates.Name = "rbnUpdates";
-			this.rbnUpdates.Size = new System.Drawing.Size(65, 17);
-			this.rbnUpdates.TabIndex = 12;
-			this.rbnUpdates.Text = "Updates";
-			this.rbnUpdates.UseVisualStyleBackColor = true;
-			this.rbnUpdates.CheckedChanged += new System.EventHandler(this.rbnUpdates_CheckedChanged);
+			this.rbnAvatars.AutoSize = true;
+			this.rbnAvatars.Enabled = false;
+			this.rbnAvatars.Location = new System.Drawing.Point(133, 3);
+			this.rbnAvatars.Name = "rbnAvatars";
+			this.rbnAvatars.Size = new System.Drawing.Size(61, 17);
+			this.rbnAvatars.TabIndex = 13;
+			this.rbnAvatars.Text = "Avatars";
+			this.rbnAvatars.UseVisualStyleBackColor = true;
 			// 
 			// NPSBrowser
 			// 
@@ -785,6 +798,7 @@ namespace NPS
         private System.Windows.Forms.Label lb_ps3licenseType;
 		private System.Windows.Forms.RadioButton rbnThemes;
 		private System.Windows.Forms.RadioButton rbnUpdates;
+		private System.Windows.Forms.RadioButton rbnAvatars;
 	}
 }
 
