@@ -35,24 +35,31 @@ namespace NPS
 			numericUpDown1.Value = Settings.Instance.simultaneousDl;
 
 			// Game URIs
-			tb_ps3uri.Text = Settings.Instance.PS3Uri;
+			tb_psvuri.Text = Settings.Instance.PSVUri;
 			tb_psmuri.Text = Settings.Instance.PSMUri;
-			tb_pspuri.Text = Settings.Instance.PSPUri;
-			tb_psvuri.Text = Settings.Instance.GamesUri;
 			tb_psxuri.Text = Settings.Instance.PSXUri;
+			tb_pspuri.Text = Settings.Instance.PSPUri;
+			tb_ps3uri.Text = Settings.Instance.PS3Uri;
+			tb_ps4uri.Text = Settings.Instance.PS4Uri;
+
+			// Avatar URIs
+			tb_ps3avataruri.Text = Settings.Instance.PS3AvatarUri;
 
 			// DLC URIs
-			tb_ps3dlcuri.Text = Settings.Instance.PS3DLCUri;
+			tb_psvdlcuri.Text = Settings.Instance.PSVDLCUri;
 			tb_pspdlcuri.Text = Settings.Instance.PSPDLCUri;
-			tb_psvdlcuri.Text = Settings.Instance.DLCUri;
+			tb_ps3dlcuri.Text = Settings.Instance.PS3DLCUri;
+			tb_ps4dlcuri.Text = Settings.Instance.PS4DLCUri;
 
 			// Theme URIs
-			tb_ps3thmuri.Text = Settings.Instance.PS3ThemeUri;
+			tb_psvthmuri.Text = Settings.Instance.PSVThemeUri;
 			tb_pspthmuri.Text = Settings.Instance.PSPThemeUri;
-			tb_psvthmuri.Text = Settings.Instance.ThemeUri;
+			tb_ps3thmuri.Text = Settings.Instance.PS3ThemeUri;
+			tb_ps4thmuri.Text = Settings.Instance.PS4ThemeUri;
 
 			// Update URIs
-			tb_psvupduri.Text = Settings.Instance.UpdateUri;
+			tb_psvupduri.Text = Settings.Instance.PSVUpdateUri;
+			tb_ps4upduri.Text = Settings.Instance.PS4UpdateUri;
 		}
 
         private void button1_Click(object sender, EventArgs e)
@@ -107,24 +114,31 @@ namespace NPS
 			Settings.Instance.simultaneousDl = (int)numericUpDown1.Value;
 
 			// Game URIs
-			Settings.Instance.PS3Uri = tb_ps3uri.Text;
+			Settings.Instance.PSVUri = tb_psvuri.Text;
 			Settings.Instance.PSMUri = tb_psmuri.Text;
-			Settings.Instance.PSPUri = tb_pspuri.Text;
-			Settings.Instance.GamesUri = tb_psvuri.Text;
 			Settings.Instance.PSXUri = tb_psxuri.Text;
+			Settings.Instance.PSPUri = tb_pspuri.Text;
+			Settings.Instance.PS3Uri = tb_ps3uri.Text;
+			Settings.Instance.PS4Uri = tb_ps4uri.Text;
+
+			// Avatar URIs
+			Settings.Instance.PS3AvatarUri = tb_ps3avataruri.Text;
 
 			// DLC URIs
-			Settings.Instance.PS3DLCUri = tb_ps3dlcuri.Text;
+			Settings.Instance.PSVDLCUri = tb_psvdlcuri.Text;
 			Settings.Instance.PSPDLCUri = tb_pspdlcuri.Text;
-			Settings.Instance.DLCUri = tb_psvdlcuri.Text;
+			Settings.Instance.PS3DLCUri = tb_ps3dlcuri.Text;
+			Settings.Instance.PS4DLCUri = tb_ps4dlcuri.Text;
 
 			// Theme URIs
-			Settings.Instance.PS3ThemeUri = tb_ps3thmuri.Text;
+			Settings.Instance.PSVThemeUri = tb_psvthmuri.Text;
 			Settings.Instance.PSPThemeUri = tb_pspthmuri.Text;
-			Settings.Instance.ThemeUri = tb_psvthmuri.Text;
+			Settings.Instance.PS3ThemeUri = tb_ps3thmuri.Text;
+			Settings.Instance.PS4ThemeUri = tb_ps4thmuri.Text;
 
 			// Update URIs
-			Settings.Instance.UpdateUri = tb_psvupduri.Text;
+			Settings.Instance.PSVUpdateUri = tb_psvupduri.Text;
+			Settings.Instance.PS4UpdateUri = tb_ps4upduri.Text;
 
 			if (withStoring)
                 Settings.Instance.Store();
@@ -150,6 +164,16 @@ namespace NPS
 			ShowOpenFileWindow(tb_ps3uri);
 		}
 
+		private void btn_ps4uri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_ps4uri);
+		}
+
+		private void btn_ps3avataruri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_ps3avataruri);
+		}
+
 		private void btn_pspuri_Click(object sender, EventArgs e)
 		{
 			ShowOpenFileWindow(tb_pspuri);
@@ -170,6 +194,11 @@ namespace NPS
 			ShowOpenFileWindow(tb_pspdlcuri);
 		}
 
+		private void btn_ps4dlcuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_ps4dlcuri);
+		}
+
 		private void btn_psvthmuri_Click(object sender, EventArgs e)
 		{
 			ShowOpenFileWindow(tb_psvthmuri);
@@ -180,6 +209,11 @@ namespace NPS
 			ShowOpenFileWindow(tb_ps3thmuri);
 		}
 
+		private void btn_ps4thmuri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_ps4thmuri);
+		}
+
 		private void btn_pspthmuri_Click(object sender, EventArgs e)
 		{
 			ShowOpenFileWindow(tb_pspthmuri);
@@ -188,6 +222,11 @@ namespace NPS
 		private void btn_psvupduri_Click(object sender, EventArgs e)
 		{
 			ShowOpenFileWindow(tb_psvupduri);
+		}
+
+		private void btn_ps4upduri_Click(object sender, EventArgs e)
+		{
+			ShowOpenFileWindow(tb_ps4upduri);
 		}
 
 		private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -272,5 +311,5 @@ namespace NPS
                 }
             }
         }
-    }
+	}
 }

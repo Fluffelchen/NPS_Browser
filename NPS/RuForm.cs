@@ -21,7 +21,8 @@ namespace NPS
         List<Item> psxDbs = new List<Item>();
 		List<Item> themesDbs = new List<Item>();
 		List<Item> updatesDbs = new List<Item>();
-        HashSet<string> regions = new HashSet<string>();
+		List<Item> avatarsDbs = new List<Item>();
+		HashSet<string> regions = new HashSet<string>();
         int currentOrderColumn = 0;
         bool currentOrderInverted = false;
 
@@ -35,7 +36,7 @@ namespace NPS
             this.Icon = Properties.Resources._8_512;
             new Settings();
 
-            if (string.IsNullOrEmpty(Settings.Instance.GamesUri) && string.IsNullOrEmpty(Settings.Instance.DLCUri))
+            if (string.IsNullOrEmpty(Settings.Instance.PSVUri) && string.IsNullOrEmpty(Settings.Instance.PSVDLCUri))
             {
                 MessageBox.Show("Application did not provide any links to external files or decrypt mechanism.\r\nYou need to specify tsv (tab splitted text) file with your personal links to pkg files on your own.\r\n\r\nFormat: TitleId Region Name Pkg Key", "Disclaimer!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Options o = new Options();
@@ -72,9 +73,10 @@ namespace NPS
             dlcsDbs.Clear();
             gamesDbs.Clear();
 
-            LoadDatabase(Settings.Instance.DLCUri, (db) =>
+            LoadDatabase(Settings.Instance.PSVDLCUri, (db) =>
             {
 			dlcsDbs.AddRange(db);
+			
 			LoadDatabase(Settings.Instance.PS3DLCUri, (ps3dlc) =>
 			{
 			dlcsDbs.AddRange(ps3dlc);
@@ -87,7 +89,7 @@ namespace NPS
 			{
 			gamesDbs.AddRange(psp);
 
-			LoadDatabase(Settings.Instance.GamesUri, (vita) =>
+			LoadDatabase(Settings.Instance.PSVUri, (vita) =>
 			{
 			gamesDbs.AddRange(vita);
 
@@ -111,11 +113,11 @@ namespace NPS
 			{
 			themesDbs.AddRange(pspthm);
 
-			LoadDatabase(Settings.Instance.ThemeUri, (psvthm) =>
+			LoadDatabase(Settings.Instance.PSVThemeUri, (psvthm) =>
 			{
 			themesDbs.AddRange(psvthm);
 
-			LoadDatabase(Settings.Instance.UpdateUri, (psvupd) =>
+			LoadDatabase(Settings.Instance.PSVUpdateUri, (psvupd) =>
 			{
 			updatesDbs.AddRange(psvupd);
 
@@ -163,8 +165,8 @@ namespace NPS
 				txtSearch_TextChanged(null, null);
 			}));
 
-			}, DatabaseType.ItsUpdate);
-			}, DatabaseType.ItsTheme);
+			}, DatabaseType.VitaUpdate);
+			}, DatabaseType.VitaTheme);
 			}, DatabaseType.PSPTheme);
 			}, DatabaseType.PS3Theme);
 			}, DatabaseType.ItsPSX);
@@ -174,7 +176,7 @@ namespace NPS
 			}, DatabaseType.PSP);
 			}, DatabaseType.PSPDLC);
 			}, DatabaseType.PS3DLC);
-            }, DatabaseType.ItsDlc);
+            }, DatabaseType.VitaDLC);
         }
 
         void SetCheckboxState(List<Item> list, int id)
@@ -288,7 +290,7 @@ namespace NPS
                                     DateTime.TryParse(a[5], out itm.lastModifyDate);
                                 }
                             }
-                            else if (dbType == DatabaseType.ItsDlc)
+                            else if (dbType == DatabaseType.VitaDLC)
                             {
                                 itm.IsDLC = true;
                                 itm.contentType = "VITA";
@@ -340,7 +342,7 @@ namespace NPS
                                     DateTime.TryParse(a[6], out itm.lastModifyDate);
                                 }
                             }
-							else if (dbType == DatabaseType.ItsTheme)
+							else if (dbType == DatabaseType.VitaTheme)
 							{
 								itm.zRif = "";
 								itm.ContentId = a[4];
@@ -375,7 +377,7 @@ namespace NPS
 									DateTime.TryParse(a[6], out itm.lastModifyDate);
 								}
 							}
-							else if (dbType == DatabaseType.ItsUpdate)
+							else if (dbType == DatabaseType.VitaUpdate)
 							{
 								itm.TitleName += "[" + a[3] + "-" + a[4] + "]";
 								itm.pkg = a[5];
@@ -922,5 +924,33 @@ namespace NPS
         public string browser_download_url = "";
     }
 
-    enum DatabaseType { Vita, ItsDlc, ItsPsm, ItsPSX, PSPDLC, PSP, PS3, PS3DLC, ItsTheme, PS3Theme, PSPTheme, ItsUpdate }
+    enum DatabaseType
+	{
+		// PSV
+		Vita,
+		VitaDLC,
+		VitaTheme,
+		VitaUpdate,
+
+		// PSP
+		PSP,
+		PSPDLC,
+		PSPTheme,
+
+		// PS3
+		PS3,
+		PS3Avatar,
+		PS3DLC,
+		PS3Theme,
+
+		// PS4
+		PS4,
+		PS4DLC,
+		PS4Theme,
+		PS4Update,
+
+		// Others
+		ItsPsm,
+		ItsPSX,
+	}
 }
