@@ -314,110 +314,30 @@ namespace NPS
                             itm.zRif = a[4];
                             itm.ContentId = a[5];
 
-                            if (dbType == DatabaseType.PS3 || dbType == DatabaseType.PS3DLC)
-                            {
-
-                                if (dbType == DatabaseType.PS3DLC)
-                                    itm.IsDLC = true;
-                                itm.contentType = "PS3";
-                                itm.ItsPS3 = true;
-                                if (a.Length >= 7)
-                                {
-                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
-                                }
-                            }
-                            else if (dbType == DatabaseType.ItsPsm)
-                            {
-                                itm.ContentId = null;
-                                //a[5] = null;
-                                itm.contentType = "PSM";
-                                if (a.Length >= 6)
-                                {
-                                    DateTime.TryParse(a[5], out itm.lastModifyDate);
-                                }
-                            }
-                            else if (dbType == DatabaseType.VitaDLC)
-                            {
-                                itm.IsDLC = true;
-                                itm.contentType = "VITA";
-                                if (a.Length >= 7)
-                                {
-                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
-                                }
-                            }
-                            else if (dbType == DatabaseType.ItsPSX)
-                            {
-                                itm.zRif = "";
-                                itm.ContentId = a[4];
-                                itm.contentType = "PSX";
-                                itm.ItsPsx = true;
-                                if (a.Length >= 6)
-                                {
-                                    DateTime.TryParse(a[5], out itm.lastModifyDate);
-                                }
-                            }
-                            else if (dbType == DatabaseType.Vita)
-                            {
-                                itm.contentType = "VITA";
-                                if (a.Length >= 7)
-                                {
-                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
-                                }
-                            }
-                            else if (dbType == DatabaseType.PSP)
-                            {
-                                itm.contentType = a[2];
-                                itm.TitleName = a[3];
-                                itm.pkg = a[4];
-                                itm.ContentId = a[5];
-                                itm.ItsPsp = true;
-                                if (a.Length >= 7)
-                                {
-                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
-                                }
-                            }
-                            else if (dbType == DatabaseType.PSPDLC)
-                            {
-                                itm.zRif = "";
-                                itm.ContentId = a[4];
-                                itm.IsDLC = true;
-                                itm.ItsPsp = true;
-                                itm.contentType = "PSP";
-                                if (a.Length >= 7)
-                                {
-                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
-                                }
-                            }
-							else if (dbType == DatabaseType.VitaTheme)
+							// PSV
+							if (dbType == DatabaseType.Vita)
 							{
-								itm.zRif = "";
-								itm.ContentId = a[4];
-								itm.IsTheme = true;
 								itm.contentType = "VITA";
 								if (a.Length >= 7)
 								{
 									DateTime.TryParse(a[6], out itm.lastModifyDate);
 								}
 							}
-							else if (dbType == DatabaseType.PSPTheme)
+							else if (dbType == DatabaseType.VitaDLC)
 							{
-								itm.zRif = "";
-								itm.ContentId = a[4];
-								itm.IsTheme = true;
-								itm.ItsPsp = true;
-								itm.contentType = "PSP";
+								itm.IsDLC = true;
+								itm.contentType = "VITA";
 								if (a.Length >= 7)
 								{
 									DateTime.TryParse(a[6], out itm.lastModifyDate);
 								}
 							}
-							else if (dbType == DatabaseType.PS3Theme)
+							else if (dbType == DatabaseType.VitaTheme)
 							{
 								itm.zRif = "";
 								itm.ContentId = a[4];
 								itm.IsTheme = true;
-								itm.ItsPS3 = true;
-								itm.contentType = "PS3";
+								itm.contentType = "VITA";
 								if (a.Length >= 7)
 								{
 									DateTime.TryParse(a[6], out itm.lastModifyDate);
@@ -437,12 +357,133 @@ namespace NPS
 								}
 							}
 
+							// PSP
+							else if (dbType == DatabaseType.PSP)
+							{
+								itm.contentType = a[2];
+								itm.TitleName = a[3];
+								itm.pkg = a[4];
+								itm.ContentId = a[5];
+								itm.ItsPsp = true;
+								if (a.Length >= 7)
+								{
+									DateTime.TryParse(a[6], out itm.lastModifyDate);
+								}
+							}
+							else if (dbType == DatabaseType.PSPDLC)
+							{
+								itm.zRif = "";
+								itm.ContentId = a[4];
+								itm.IsDLC = true;
+								itm.ItsPsp = true;
+								itm.contentType = "PSP";
+								if (a.Length >= 7)
+								{
+									DateTime.TryParse(a[6], out itm.lastModifyDate);
+								}
+							}
+							else if (dbType == DatabaseType.PSPTheme)
+							{
+								itm.zRif = "";
+								itm.ContentId = a[4];
+								itm.IsTheme = true;
+								itm.ItsPsp = true;
+								itm.contentType = "PSP";
+								if (a.Length >= 7)
+								{
+									DateTime.TryParse(a[6], out itm.lastModifyDate);
+								}
+							}
+
+							// PS3
+							else if (dbType == DatabaseType.PS3 || dbType == DatabaseType.PS3DLC)
+                            {
+
+                                if (dbType == DatabaseType.PS3DLC)
+                                    itm.IsDLC = true;
+                                itm.contentType = "PS3";
+                                itm.ItsPS3 = true;
+                                if (a.Length >= 7)
+                                {
+                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                }
+                            }
+							else if (dbType == DatabaseType.PS3Avatar)
+							{
+								// TODO: ADD CODE
+							}
+							else if (dbType == DatabaseType.PS3Theme)
+							{
+								itm.zRif = "";
+								itm.ContentId = a[4];
+								itm.IsTheme = true;
+								itm.ItsPS3 = true;
+								itm.contentType = "PS3";
+								if (a.Length >= 7)
+								{
+									DateTime.TryParse(a[6], out itm.lastModifyDate);
+								}
+							}
+
+							// PS4
+							else if (dbType == DatabaseType.PS4 || dbType == DatabaseType.PS4DLC)
+							{
+
+								if (dbType == DatabaseType.PS4DLC)
+									itm.IsDLC = true;
+								itm.contentType = "PS4";
+								itm.ItsPS4 = true;
+								if (a.Length >= 7)
+								{
+									DateTime.TryParse(a[6], out itm.lastModifyDate);
+								}
+							}
+							else if (dbType == DatabaseType.PS4Theme)
+							{
+								itm.zRif = "";
+								itm.ContentId = a[4];
+								itm.IsTheme = true;
+								itm.ItsPS4 = true;
+								itm.contentType = "PS4";
+								if (a.Length >= 7)
+								{
+									DateTime.TryParse(a[6], out itm.lastModifyDate);
+								}
+							}
+							else if (dbType == DatabaseType.PS4Update)
+							{
+								// TODO: ADD CODE
+							}
+
+							// Others
+							else if (dbType == DatabaseType.ItsPsm)
+                            {
+                                itm.ContentId = null;
+                                //a[5] = null;
+                                itm.contentType = "PSM";
+                                if (a.Length >= 6)
+                                {
+                                    DateTime.TryParse(a[5], out itm.lastModifyDate);
+                                }
+                            }
+                            else if (dbType == DatabaseType.ItsPSX)
+                            {
+                                itm.zRif = "";
+                                itm.ContentId = a[4];
+                                itm.contentType = "PSX";
+                                itm.ItsPsx = true;
+                                if (a.Length >= 6)
+                                {
+                                    DateTime.TryParse(a[5], out itm.lastModifyDate);
+                                }
+                            }
+
 							if ((!itm.zRif.ToLower().Contains("missing")) && (itm.pkg.ToLower().Contains("http://")
                             || itm.pkg.ToLower().Contains("https://")))
                             {
                                 if (itm.zRif.ToLower().Contains("not required")) itm.zRif = "";
 
-                                if (dbType == DatabaseType.Vita || dbType == DatabaseType.PS3 || dbType == DatabaseType.PSP)
+                                if (dbType == DatabaseType.Vita || dbType == DatabaseType.PSP || dbType == DatabaseType.PS3 || dbType == DatabaseType.PS4)
                                     itm.CalculateDlCs(dlcsDbs.ToArray());
 
                                 dbs.Add(itm);
@@ -494,6 +535,7 @@ namespace NPS
 
             string type = "";
 			if (rbnGames.Checked) type = "Games";
+			else if (rbnAvatars.Checked) type = "Avatars";
 			else if (rbnDLC.Checked) type = "DLCs";
 			else if (rbnThemes.Checked) type = "Themes";
 			else if (rbnUpdates.Checked) type = "Updates";
