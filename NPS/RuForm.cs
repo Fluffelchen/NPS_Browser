@@ -447,10 +447,7 @@ namespace NPS
 										if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
 										{
 											if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
-
-											if (dbType == DatabaseType.Vita || dbType == DatabaseType.PSP || dbType == DatabaseType.PS3 || dbType == DatabaseType.PS4)
-												inneritm.CalculateDlCs(dlcsDbs.ToArray());
-
+											inneritm.CalculateDlCs(dlcsDbs.ToArray());
 											dbs.Add(inneritm);
 											regions.Add(inneritm.Region.Replace(" ", ""));
 										}
@@ -462,19 +459,91 @@ namespace NPS
 							}
 							else if (dbType == DatabaseType.PS4DLC)
 							{
-								itm.ItsPS4 = true;
-								itm.contentType = "PS4";
-								itm.IsDLC = true;
+								// pkg is actually a JSON file pointing toward the real links
+								try
+								{
+									DateTime.TryParse(a[6], out DateTime lmd);
 
-								DateTime.TryParse(a[6], out itm.lastModifyDate);
+									WebClient p4client = new WebClient();
+									p4client.Credentials = CredentialCache.DefaultCredentials;
+									p4client.Headers.Add("user-agent", "MyPersonalApp :)");
+									string json = p4client.DownloadString(itm.pkg);
+									wc.Dispose();
+
+									JsonObject fields = SimpleJson.SimpleJson.DeserializeObject<JsonObject>(json);
+									JsonArray pieces = fields["pieces"] as JsonArray;
+									foreach (JsonObject piece in pieces)
+									{
+										Item inneritm = new Item()
+										{
+											TitleId = a[0],
+											Region = a[1],
+											TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
+											pkg = piece["url"].ToString(),
+											zRif = a[4],
+											ContentId = a[5],
+											ItsPS4 = true,
+											contentType = "PS4",
+											IsDLC = true,
+											lastModifyDate = lmd,
+										};
+
+										// Copy this code here until we have a better solution
+										if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
+										{
+											if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
+											dbs.Add(inneritm);
+											regions.Add(inneritm.Region.Replace(" ", ""));
+										}
+
+										continue;
+									}
+								}
+								catch { }
 							}
 							else if (dbType == DatabaseType.PS4Theme)
 							{
-								itm.ItsPS4 = true;
-								itm.contentType = "PS4";
-								itm.IsTheme = true;
+								// pkg is actually a JSON file pointing toward the real links
+								try
+								{
+									DateTime.TryParse(a[6], out DateTime lmd);
 
-								DateTime.TryParse(a[6], out itm.lastModifyDate);
+									WebClient p4client = new WebClient();
+									p4client.Credentials = CredentialCache.DefaultCredentials;
+									p4client.Headers.Add("user-agent", "MyPersonalApp :)");
+									string json = p4client.DownloadString(itm.pkg);
+									wc.Dispose();
+
+									JsonObject fields = SimpleJson.SimpleJson.DeserializeObject<JsonObject>(json);
+									JsonArray pieces = fields["pieces"] as JsonArray;
+									foreach (JsonObject piece in pieces)
+									{
+										Item inneritm = new Item()
+										{
+											TitleId = a[0],
+											Region = a[1],
+											TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
+											pkg = piece["url"].ToString(),
+											zRif = a[4],
+											ContentId = a[5],
+											ItsPS4 = true,
+											contentType = "PS4",
+											IsTheme = true,
+											lastModifyDate = lmd,
+										};
+
+										// Copy this code here until we have a better solution
+										if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
+										{
+											if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
+											dbs.Add(inneritm);
+											regions.Add(inneritm.Region.Replace(" ", ""));
+										}
+
+										continue;
+									}
+								}
+								catch { }
 							}
 							else if (dbType == DatabaseType.PS4Update)
 							{
