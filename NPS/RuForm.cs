@@ -439,7 +439,7 @@ namespace NPS
 											{
 												TitleId = a[0],
 												Region = a[1],
-												TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
+												TitleName = a[2] + " (Offset " + piece["fileOffset"].ToString() + ")",
 												pkg = piece["url"].ToString(),
 												zRif = a[4],
 												ContentId = a[5],
@@ -490,7 +490,7 @@ namespace NPS
 											{
 												TitleId = a[0],
 												Region = a[1],
-												TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
+												TitleName = a[2] + " (Offset " + piece["fileOffset"].ToString() + ")",
 												pkg = piece["url"].ToString(),
 												zRif = a[4],
 												ContentId = a[5],
@@ -541,7 +541,7 @@ namespace NPS
 											{
 												TitleId = a[0],
 												Region = a[1],
-												TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
+												TitleName = a[2] + " (Offset " + piece["fileOffset"].ToString() + ")",
 												pkg = piece["url"].ToString(),
 												zRif = a[4],
 												ContentId = a[5],
