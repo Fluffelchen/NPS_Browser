@@ -305,178 +305,168 @@ namespace NPS
 
                             }
 
-                            var itm = new Item();
-
-                            itm.TitleId = a[0];
-                            itm.Region = a[1];
-                            itm.TitleName = a[2];
-                            itm.pkg = a[3];
-                            itm.zRif = a[4];
-                            itm.ContentId = a[5];
+							var itm = new Item()
+							{
+								TitleId = a[0],
+								Region = a[1],
+								TitleName = a[2],
+								pkg = a[3],
+								zRif = a[4],
+								ContentId = a[5],
+							};
 
 							// PSV
 							if (dbType == DatabaseType.Vita)
 							{
 								itm.contentType = "VITA";
-								if (a.Length >= 7)
-								{
-									DateTime.TryParse(a[6], out itm.lastModifyDate);
-								}
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
 							}
 							else if (dbType == DatabaseType.VitaDLC)
 							{
-								itm.IsDLC = true;
 								itm.contentType = "VITA";
-								if (a.Length >= 7)
-								{
-									DateTime.TryParse(a[6], out itm.lastModifyDate);
-								}
+								itm.IsDLC = true;
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
 							}
 							else if (dbType == DatabaseType.VitaTheme)
 							{
-								itm.zRif = "";
-								itm.ContentId = a[4];
-								itm.IsTheme = true;
 								itm.contentType = "VITA";
-								if (a.Length >= 7)
-								{
-									DateTime.TryParse(a[6], out itm.lastModifyDate);
-								}
+								itm.IsTheme = true;
 							}
 							else if (dbType == DatabaseType.VitaUpdate)
 							{
-								itm.TitleName += "[" + a[3] + "-" + a[4] + "]";
-								itm.pkg = a[5];
-								itm.zRif = "";
-								itm.ContentId = Path.GetFileNameWithoutExtension(a[5]);
-								itm.IsUpdate = true;
 								itm.contentType = "VITA";
-								if (a.Length >= 8)
-								{
-									DateTime.TryParse(a[7], out itm.lastModifyDate);
-								}
+								itm.IsUpdate = true;
+
+								itm.ContentId = null;
+								itm.zRif = "";
+								itm.TitleName = a[2] + " (" + a[3] + ")";
+								itm.pkg = a[5];
+								DateTime.TryParse(a[7], out itm.lastModifyDate);
 							}
 
 							// PSP
 							else if (dbType == DatabaseType.PSP)
 							{
+								itm.ItsPsp = true;
+								itm.contentType = "PSP";
+
 								itm.contentType = a[2];
 								itm.TitleName = a[3];
 								itm.pkg = a[4];
 								itm.ContentId = a[5];
-								itm.ItsPsp = true;
-								if (a.Length >= 7)
-								{
-									DateTime.TryParse(a[6], out itm.lastModifyDate);
-								}
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
+								itm.zRif = a[7];
 							}
 							else if (dbType == DatabaseType.PSPDLC)
 							{
-								itm.zRif = "";
-								itm.ContentId = a[4];
-								itm.IsDLC = true;
 								itm.ItsPsp = true;
 								itm.contentType = "PSP";
-								if (a.Length >= 7)
-								{
-									DateTime.TryParse(a[6], out itm.lastModifyDate);
-								}
+								itm.IsDLC = true;
+								
+								itm.ContentId = a[4];
+								DateTime.TryParse(a[5], out itm.lastModifyDate);
+								itm.zRif = a[6];
 							}
 							else if (dbType == DatabaseType.PSPTheme)
 							{
-								itm.zRif = "";
-								itm.ContentId = a[4];
-								itm.IsTheme = true;
 								itm.ItsPsp = true;
 								itm.contentType = "PSP";
-								if (a.Length >= 7)
-								{
-									DateTime.TryParse(a[6], out itm.lastModifyDate);
-								}
+								itm.IsTheme = true;
+
+								itm.zRif = "";
+								itm.ContentId = a[4];
+								DateTime.TryParse(a[5], out itm.lastModifyDate);
 							}
 
 							// PS3
-							else if (dbType == DatabaseType.PS3 || dbType == DatabaseType.PS3DLC)
+							else if (dbType == DatabaseType.PS3)
                             {
-
-                                if (dbType == DatabaseType.PS3DLC)
-                                    itm.IsDLC = true;
-                                itm.contentType = "PS3";
+								itm.contentType = "PS3";
                                 itm.ItsPS3 = true;
-                                if (a.Length >= 7)
-                                {
-                                    DateTime.TryParse(a[6], out itm.lastModifyDate);
-                                }
-                            }
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
+							}
 							else if (dbType == DatabaseType.PS3Avatar)
 							{
-								// TODO: ADD CODE
+								itm.ItsPS3 = true;
+								itm.contentType = "PS3";
+								itm.IsAvatar = true;
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
+							}
+							else if (dbType == DatabaseType.PS3DLC)
+							{
+								itm.ItsPS3 = true;
+								itm.contentType = "PS3";
+								itm.IsDLC = true;
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
 							}
 							else if (dbType == DatabaseType.PS3Theme)
 							{
-								itm.zRif = "";
-								itm.ContentId = a[4];
-								itm.IsTheme = true;
 								itm.ItsPS3 = true;
 								itm.contentType = "PS3";
-								if (a.Length >= 7)
-								{
-									DateTime.TryParse(a[6], out itm.lastModifyDate);
-								}
+								itm.IsTheme = true;
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
 							}
 
 							// PS4
-							else if (dbType == DatabaseType.PS4 || dbType == DatabaseType.PS4DLC)
+							else if (dbType == DatabaseType.PS4)
 							{
-
-								if (dbType == DatabaseType.PS4DLC)
-									itm.IsDLC = true;
-								itm.contentType = "PS4";
 								itm.ItsPS4 = true;
-								if (a.Length >= 7)
-								{
-									DateTime.TryParse(a[6], out itm.lastModifyDate);
-								}
+								itm.contentType = "PS4";
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
+							}
+							else if (dbType == DatabaseType.PS4DLC)
+							{
+								itm.ItsPS4 = true;
+								itm.contentType = "PS4";
+								itm.IsDLC = true;
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
 							}
 							else if (dbType == DatabaseType.PS4Theme)
 							{
-								itm.zRif = "";
-								itm.ContentId = a[4];
-								itm.IsTheme = true;
 								itm.ItsPS4 = true;
 								itm.contentType = "PS4";
-								if (a.Length >= 7)
-								{
-									DateTime.TryParse(a[6], out itm.lastModifyDate);
-								}
+								itm.IsTheme = true;
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
 							}
 							else if (dbType == DatabaseType.PS4Update)
 							{
-								// TODO: ADD CODE
+								itm.ItsPS4 = true;
+								itm.contentType = "PS4";
+								itm.IsUpdate = true;
+
+								itm.ContentId = null;
+								itm.zRif = "";
+								itm.TitleName = a[2] + " (" + a[3] + ")";
+								itm.pkg = a[5];
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
 							}
 
 							// Others
 							else if (dbType == DatabaseType.ItsPsm)
                             {
-                                itm.ContentId = null;
-                                //a[5] = null;
-                                itm.contentType = "PSM";
-                                if (a.Length >= 6)
-                                {
-                                    DateTime.TryParse(a[5], out itm.lastModifyDate);
-                                }
-                            }
+								itm.contentType = "PSM";
+
+								itm.ContentId = null;
+								DateTime.TryParse(a[5], out itm.lastModifyDate);
+							}
                             else if (dbType == DatabaseType.ItsPSX)
                             {
-                                itm.zRif = "";
+								itm.contentType = "PSX";
+								itm.ItsPsx = true;
+
+								itm.zRif = "";
                                 itm.ContentId = a[4];
-                                itm.contentType = "PSX";
-                                itm.ItsPsx = true;
-                                if (a.Length >= 6)
-                                {
-                                    DateTime.TryParse(a[5], out itm.lastModifyDate);
-                                }
-                            }
+								DateTime.TryParse(a[5], out itm.lastModifyDate);
+							}
 
 							if ((!itm.zRif.ToLower().Contains("missing")) && (itm.pkg.ToLower().Contains("http://")
                             || itm.pkg.ToLower().Contains("https://")))
