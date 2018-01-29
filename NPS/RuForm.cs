@@ -415,135 +415,155 @@ namespace NPS
 							// PS4
 							else if (dbType == DatabaseType.PS4)
 							{
-								// pkg is actually a JSON file pointing toward the real links
-								try
+								itm.ItsPS4 = true;
+								itm.contentType = "PS4";
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
+
+								// If the pkg is really a link to a JSON
+								if (itm.pkg.EndsWith(".json"))
 								{
-									DateTime.TryParse(a[6], out DateTime lmd);
-
-									WebClient p4client = new WebClient();
-									p4client.Credentials = CredentialCache.DefaultCredentials;
-									p4client.Headers.Add("user-agent", "MyPersonalApp :)");
-									string json = p4client.DownloadString(itm.pkg);
-									wc.Dispose();
-
-									JsonObject fields = SimpleJson.SimpleJson.DeserializeObject<JsonObject>(json);
-									JsonArray pieces = fields["pieces"] as JsonArray;
-									foreach (JsonObject piece in pieces)
+									try
 									{
-										Item inneritm = new Item()
-										{
-											TitleId = a[0],
-											Region = a[1],
-											TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
-											pkg = piece["url"].ToString(),
-											zRif = a[4],
-											ContentId = a[5],
-											ItsPS4 = true,
-											contentType = "PS4",
-											lastModifyDate = lmd,
-										};
+										WebClient p4client = new WebClient();
+										p4client.Credentials = CredentialCache.DefaultCredentials;
+										p4client.Headers.Add("user-agent", "MyPersonalApp :)");
+										string json = p4client.DownloadString(itm.pkg);
+										wc.Dispose();
 
-										// Copy this code here until we have a better solution
-										if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
+										JsonObject fields = SimpleJson.SimpleJson.DeserializeObject<JsonObject>(json);
+										JsonArray pieces = fields["pieces"] as JsonArray;
+										foreach (JsonObject piece in pieces)
 										{
-											if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
-											inneritm.CalculateDlCs(dlcsDbs.ToArray());
-											dbs.Add(inneritm);
-											regions.Add(inneritm.Region.Replace(" ", ""));
+											Item inneritm = new Item()
+											{
+												TitleId = a[0],
+												Region = a[1],
+												TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
+												pkg = piece["url"].ToString(),
+												zRif = a[4],
+												ContentId = a[5],
+												ItsPS4 = true,
+												contentType = "PS4",
+												lastModifyDate = itm.lastModifyDate,
+											};
+
+											// Copy this code here until we have a better solution
+											if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
+											{
+												if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
+												inneritm.CalculateDlCs(dlcsDbs.ToArray());
+												dbs.Add(inneritm);
+												regions.Add(inneritm.Region.Replace(" ", ""));
+											}
+
+											continue;
 										}
-
-										continue;
 									}
+									catch { }
 								}
-								catch { }
 							}
 							else if (dbType == DatabaseType.PS4DLC)
 							{
-								// pkg is actually a JSON file pointing toward the real links
-								try
+								itm.ItsPS4 = true;
+								itm.contentType = "PS4";
+								itm.IsDLC = true;
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
+
+								// If the pkg is really a link to a JSON
+								if (itm.pkg.EndsWith(".json"))
 								{
-									DateTime.TryParse(a[6], out DateTime lmd);
-
-									WebClient p4client = new WebClient();
-									p4client.Credentials = CredentialCache.DefaultCredentials;
-									p4client.Headers.Add("user-agent", "MyPersonalApp :)");
-									string json = p4client.DownloadString(itm.pkg);
-									wc.Dispose();
-
-									JsonObject fields = SimpleJson.SimpleJson.DeserializeObject<JsonObject>(json);
-									JsonArray pieces = fields["pieces"] as JsonArray;
-									foreach (JsonObject piece in pieces)
+									try
 									{
-										Item inneritm = new Item()
-										{
-											TitleId = a[0],
-											Region = a[1],
-											TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
-											pkg = piece["url"].ToString(),
-											zRif = a[4],
-											ContentId = a[5],
-											ItsPS4 = true,
-											contentType = "PS4",
-											IsDLC = true,
-											lastModifyDate = lmd,
-										};
+										WebClient p4client = new WebClient();
+										p4client.Credentials = CredentialCache.DefaultCredentials;
+										p4client.Headers.Add("user-agent", "MyPersonalApp :)");
+										string json = p4client.DownloadString(itm.pkg);
+										wc.Dispose();
 
-										// Copy this code here until we have a better solution
-										if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
+										JsonObject fields = SimpleJson.SimpleJson.DeserializeObject<JsonObject>(json);
+										JsonArray pieces = fields["pieces"] as JsonArray;
+										foreach (JsonObject piece in pieces)
 										{
-											if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
-											dbs.Add(inneritm);
-											regions.Add(inneritm.Region.Replace(" ", ""));
+											Item inneritm = new Item()
+											{
+												TitleId = a[0],
+												Region = a[1],
+												TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
+												pkg = piece["url"].ToString(),
+												zRif = a[4],
+												ContentId = a[5],
+												ItsPS4 = true,
+												contentType = "PS4",
+												IsDLC = true,
+												lastModifyDate = itm.lastModifyDate,
+											};
+
+											// Copy this code here until we have a better solution
+											if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
+											{
+												if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
+												dbs.Add(inneritm);
+												regions.Add(inneritm.Region.Replace(" ", ""));
+											}
+
+											continue;
 										}
-
-										continue;
 									}
+									catch { }
 								}
-								catch { }
 							}
 							else if (dbType == DatabaseType.PS4Theme)
 							{
-								// pkg is actually a JSON file pointing toward the real links
-								try
+								itm.ItsPS4 = true;
+								itm.contentType = "PS4";
+								itm.IsTheme = true;
+
+								DateTime.TryParse(a[6], out itm.lastModifyDate);
+
+								// If the pkg is really a link to a JSON
+								if (itm.pkg.EndsWith(".json"))
 								{
-									DateTime.TryParse(a[6], out DateTime lmd);
-
-									WebClient p4client = new WebClient();
-									p4client.Credentials = CredentialCache.DefaultCredentials;
-									p4client.Headers.Add("user-agent", "MyPersonalApp :)");
-									string json = p4client.DownloadString(itm.pkg);
-									wc.Dispose();
-
-									JsonObject fields = SimpleJson.SimpleJson.DeserializeObject<JsonObject>(json);
-									JsonArray pieces = fields["pieces"] as JsonArray;
-									foreach (JsonObject piece in pieces)
+									try
 									{
-										Item inneritm = new Item()
-										{
-											TitleId = a[0],
-											Region = a[1],
-											TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
-											pkg = piece["url"].ToString(),
-											zRif = a[4],
-											ContentId = a[5],
-											ItsPS4 = true,
-											contentType = "PS4",
-											IsTheme = true,
-											lastModifyDate = lmd,
-										};
+										WebClient p4client = new WebClient();
+										p4client.Credentials = CredentialCache.DefaultCredentials;
+										p4client.Headers.Add("user-agent", "MyPersonalApp :)");
+										string json = p4client.DownloadString(itm.pkg);
+										wc.Dispose();
 
-										// Copy this code here until we have a better solution
-										if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
+										JsonObject fields = SimpleJson.SimpleJson.DeserializeObject<JsonObject>(json);
+										JsonArray pieces = fields["pieces"] as JsonArray;
+										foreach (JsonObject piece in pieces)
 										{
-											if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
-											dbs.Add(inneritm);
-											regions.Add(inneritm.Region.Replace(" ", ""));
+											Item inneritm = new Item()
+											{
+												TitleId = a[0],
+												Region = a[1],
+												TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
+												pkg = piece["url"].ToString(),
+												zRif = a[4],
+												ContentId = a[5],
+												ItsPS4 = true,
+												contentType = "PS4",
+												IsTheme = true,
+												lastModifyDate = itm.lastModifyDate,
+											};
+
+											// Copy this code here until we have a better solution
+											if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
+											{
+												if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
+												dbs.Add(inneritm);
+												regions.Add(inneritm.Region.Replace(" ", ""));
+											}
+
+											continue;
 										}
-
-										continue;
 									}
+									catch { }
 								}
-								catch { }
 							}
 							else if (dbType == DatabaseType.PS4Update)
 							{
