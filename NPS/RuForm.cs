@@ -513,8 +513,9 @@ namespace NPS
 										};
 
 										AddToDbHelper(inneritm, dbType, dbs);
-										continue;
 									}
+
+									continue;
 								}
 								catch { }
 							}
