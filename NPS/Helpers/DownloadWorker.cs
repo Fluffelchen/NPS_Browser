@@ -176,9 +176,7 @@ namespace NPS
 
             if (this.status == WorkerStatus.Downloaded || this.status == WorkerStatus.Completed)
             {
-
                 lvi.SubItems[2].Text = "Unpacking";
-
 
                 var replacements = new Dictionary<string, string>
                 {

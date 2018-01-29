@@ -136,7 +136,7 @@ namespace NPS
 			this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
 			this.reloadToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
 			this.reloadToolStripMenuItem.Text = "Reload";
-			this.reloadToolStripMenuItem.Click += new System.EventHandler(this.LoadAllDatabaes);
+			this.reloadToolStripMenuItem.Click += new System.EventHandler(this.LoadAllDatabases);
 			// 
 			// optionsToolStripMenuItem
 			// 
@@ -496,6 +496,7 @@ namespace NPS
 			this.cmbType.Items.AddRange(new object[] {
             "VITA",
             "PS3",
+			"PS4",
             "PSX",
             "PSM",
             "PSP",
@@ -697,6 +698,7 @@ namespace NPS
 			this.rbnAvatars.TabIndex = 13;
 			this.rbnAvatars.Text = "Avatars";
 			this.rbnAvatars.UseVisualStyleBackColor = true;
+			this.rbnAvatars.CheckedChanged += new System.EventHandler(this.rbnAvatars_CheckedChanged);
 			// 
 			// NPSBrowser
 			// 

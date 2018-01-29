@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SimpleJson;
 
 namespace NPS
 {
@@ -64,17 +65,64 @@ namespace NPS
             }
 
             ServicePointManager.DefaultConnectionLimit = 30;
-            LoadAllDatabaes(null, null);
-
+            LoadAllDatabases(null, null);
         }
 
-        private void LoadAllDatabaes(object sender, EventArgs e)
+        private void LoadAllDatabases(object sender, EventArgs e)
         {
 			avatarsDbs.Clear();
             dlcsDbs.Clear();
             gamesDbs.Clear();
 			themesDbs.Clear();
 			updatesDbs.Clear();
+
+			// Update DBs
+			LoadDatabase(Settings.Instance.PSVUpdateUri, (psvupd) =>
+			{
+			updatesDbs.AddRange(psvupd);
+
+			LoadDatabase(Settings.Instance.PS4UpdateUri, (ps4upd) =>
+			{
+			updatesDbs.AddRange(ps4upd);
+
+			// Theme DBs
+			LoadDatabase(Settings.Instance.PSVThemeUri, (psvthm) =>
+			{
+			themesDbs.AddRange(psvthm);
+
+			LoadDatabase(Settings.Instance.PSPThemeUri, (pspthm) =>
+			{
+			themesDbs.AddRange(pspthm);
+
+			LoadDatabase(Settings.Instance.PS3ThemeUri, (ps3thm) =>
+			{
+			themesDbs.AddRange(ps3thm);
+
+			LoadDatabase(Settings.Instance.PS4ThemeUri, (ps4thm) =>
+			{
+			themesDbs.AddRange(ps4thm);
+
+			// DLC DBs
+			LoadDatabase(Settings.Instance.PSVDLCUri, (db) =>
+			{
+			dlcsDbs.AddRange(db);
+
+			LoadDatabase(Settings.Instance.PSPDLCUri, (pspdlc) =>
+			{
+			dlcsDbs.AddRange(pspdlc);
+
+			LoadDatabase(Settings.Instance.PS3DLCUri, (ps3dlc) =>
+			{
+			dlcsDbs.AddRange(ps3dlc);
+
+			LoadDatabase(Settings.Instance.PS4DLCUri, (ps4dlc) =>
+			{
+			dlcsDbs.AddRange(ps4dlc);
+
+			// Avatar DBs
+			LoadDatabase(Settings.Instance.PS3AvatarUri, (ps3avatar) =>
+			{
+			avatarsDbs.AddRange(ps3avatar);
 
 			// Game DBs
 			LoadDatabase(Settings.Instance.PSVUri, (vita) =>
@@ -100,54 +148,6 @@ namespace NPS
 			LoadDatabase(Settings.Instance.PS4Uri, (ps4) =>
 			{
 			gamesDbs.AddRange(ps4);
-
-			// Avatar DBs
-			LoadDatabase(Settings.Instance.PS3AvatarUri, (ps3avatar) =>
-			{
-			avatarsDbs.AddRange(ps3avatar);
-
-			// DLC DBs
-			LoadDatabase(Settings.Instance.PSVDLCUri, (db) =>
-            {
-			dlcsDbs.AddRange(db);
-
-			LoadDatabase(Settings.Instance.PSPDLCUri, (pspdlc) =>
-			{
-			dlcsDbs.AddRange(pspdlc);
-
-			LoadDatabase(Settings.Instance.PS3DLCUri, (ps3dlc) =>
-			{
-			dlcsDbs.AddRange(ps3dlc);
-
-			LoadDatabase(Settings.Instance.PS4DLCUri, (ps4dlc) =>
-			{
-			dlcsDbs.AddRange(ps4dlc);
-
-			// Theme DBs
-			LoadDatabase(Settings.Instance.PSVThemeUri, (psvthm) =>
-			{
-			themesDbs.AddRange(psvthm);
-
-			LoadDatabase(Settings.Instance.PSPThemeUri, (pspthm) =>
-			{
-			themesDbs.AddRange(pspthm);
-
-			LoadDatabase(Settings.Instance.PS3ThemeUri, (ps3thm) =>
-			{
-			themesDbs.AddRange(ps3thm);
-
-			LoadDatabase(Settings.Instance.PS4ThemeUri, (ps4thm) =>
-			{
-			themesDbs.AddRange(ps4thm);
-
-			// Update DBs
-			LoadDatabase(Settings.Instance.PSVUpdateUri, (psvupd) =>
-			{
-			updatesDbs.AddRange(psvupd);
-
-			LoadDatabase(Settings.Instance.PS4UpdateUri, (ps4upd) =>
-			{
-			updatesDbs.AddRange(ps4upd);
 
 			Invoke(new Action(() =>
 			{
@@ -197,25 +197,6 @@ namespace NPS
 				txtSearch_TextChanged(null, null);
 			}));
 
-			// Update DBs
-			}, DatabaseType.PS4Update);
-			}, DatabaseType.VitaUpdate);
-
-			// Theme DBs
-			}, DatabaseType.PS4Theme);
-			}, DatabaseType.PS3Theme);
-			}, DatabaseType.PSPTheme);
-			}, DatabaseType.VitaTheme);
-
-			// DLC DBs
-			}, DatabaseType.PS4DLC);
-			}, DatabaseType.PS3DLC);
-			}, DatabaseType.PSPDLC);
-			}, DatabaseType.VitaDLC);
-			
-			// Avatar DBs
-			}, DatabaseType.PS3Avatar);
-
 			// Game DBs
 			}, DatabaseType.PS4);
 			}, DatabaseType.PS3);
@@ -223,6 +204,25 @@ namespace NPS
 			}, DatabaseType.ItsPSX);
 			}, DatabaseType.ItsPsm);
 			}, DatabaseType.Vita);
+
+			// Avatar DBs
+			}, DatabaseType.PS3Avatar);
+
+			// DLC DBs
+			}, DatabaseType.PS4DLC);
+			}, DatabaseType.PS3DLC);
+			}, DatabaseType.PSPDLC);
+			}, DatabaseType.VitaDLC);
+
+			// Theme DBs
+			}, DatabaseType.PS4Theme);
+			}, DatabaseType.PS3Theme);
+			}, DatabaseType.PSPTheme);
+			}, DatabaseType.VitaTheme);
+
+			// Update DBs
+			}, DatabaseType.PS4Update);
+			}, DatabaseType.VitaUpdate);
 		}
 
         void SetCheckboxState(List<Item> list, int id)
@@ -275,7 +275,7 @@ namespace NPS
             });
         }
 
-        private void LoadDatabase(string path, Action<List<Item>> result, DatabaseType dbType)// bool addDlc = false, bool isDLC = false, bool isPsm = false)
+        private void LoadDatabase(string path, Action<List<Item>> result, DatabaseType dbType)
         {
             List<Item> dbs = new List<Item>();
             if (string.IsNullOrEmpty(path))
@@ -302,7 +302,6 @@ namespace NPS
                             if (a.Length < 2)
                             {
                                 continue;
-
                             }
 
 							var itm = new Item()
@@ -416,10 +415,50 @@ namespace NPS
 							// PS4
 							else if (dbType == DatabaseType.PS4)
 							{
-								itm.ItsPS4 = true;
-								itm.contentType = "PS4";
+								// pkg is actually a JSON file pointing toward the real links
+								try
+								{
+									DateTime.TryParse(a[6], out DateTime lmd);
 
-								DateTime.TryParse(a[6], out itm.lastModifyDate);
+									WebClient p4client = new WebClient();
+									p4client.Credentials = CredentialCache.DefaultCredentials;
+									p4client.Headers.Add("user-agent", "MyPersonalApp :)");
+									string json = p4client.DownloadString(itm.pkg);
+									wc.Dispose();
+
+									JsonObject fields = SimpleJson.SimpleJson.DeserializeObject<JsonObject>(json);
+									JsonArray pieces = fields["pieces"] as JsonArray;
+									foreach (JsonObject piece in pieces)
+									{
+										Item inneritm = new Item()
+										{
+											TitleId = a[0],
+											Region = a[1],
+											TitleName = a[2] + " (Piece " + piece["fileOffset"].ToString() + ")",
+											pkg = piece["url"].ToString(),
+											zRif = a[4],
+											ContentId = a[5],
+											ItsPS4 = true,
+											contentType = "PS4",
+											lastModifyDate = lmd,
+										};
+
+										// Copy this code here until we have a better solution
+										if (inneritm.pkg.ToLower().Contains("http://") || inneritm.pkg.ToLower().Contains("https://")) // (!inneritm.zRif.ToLower().Contains("missing"))
+										{
+											if (inneritm.zRif.ToLower().Contains("not required")) itm.zRif = "";
+
+											if (dbType == DatabaseType.Vita || dbType == DatabaseType.PSP || dbType == DatabaseType.PS3 || dbType == DatabaseType.PS4)
+												inneritm.CalculateDlCs(dlcsDbs.ToArray());
+
+											dbs.Add(inneritm);
+											regions.Add(inneritm.Region.Replace(" ", ""));
+										}
+
+										continue;
+									}
+								}
+								catch { }
 							}
 							else if (dbType == DatabaseType.PS4DLC)
 							{
@@ -468,9 +507,8 @@ namespace NPS
 								DateTime.TryParse(a[5], out itm.lastModifyDate);
 							}
 
-							if ((!itm.zRif.ToLower().Contains("missing")) && (itm.pkg.ToLower().Contains("http://")
-                            || itm.pkg.ToLower().Contains("https://")))
-                            {
+							if (itm.pkg.ToLower().Contains("http://") || itm.pkg.ToLower().Contains("https://")) // (!itm.zRif.ToLower().Contains("missing"))
+							{
                                 if (itm.zRif.ToLower().Contains("not required")) itm.zRif = "";
 
                                 if (dbType == DatabaseType.Vita || dbType == DatabaseType.PSP || dbType == DatabaseType.PS3 || dbType == DatabaseType.PS4)
@@ -489,12 +527,10 @@ namespace NPS
 
         private void RefreshList(List<Item> items)
         {
-
             List<ListViewItem> list = new List<ListViewItem>();
 
             foreach (var item in items)
             {
-
                 var a = new ListViewItem(item.TitleId);
                 if (History.I.completedDownloading.Contains(item))
                     a.BackColor = ColorTranslator.FromHtml("#B7FF7C");
@@ -570,8 +606,6 @@ namespace NPS
                 System.Diagnostics.Process.Start(url);
         }
 
-
-
         // Search
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -606,7 +640,16 @@ namespace NPS
             }
         }
 
-        private void rbnDLC_CheckedChanged(object sender, EventArgs e)
+		private void rbnAvatars_CheckedChanged(object sender, EventArgs e)
+		{
+			if (rbnAvatars.Checked)
+			{
+				currentDatabase = avatarsDbs;
+				txtSearch_TextChanged(null, null);
+			}
+		}
+
+		private void rbnDLC_CheckedChanged(object sender, EventArgs e)
         {
             if (rbnDLC.Checked)
             {
@@ -706,7 +749,7 @@ namespace NPS
             if (lstTitles.SelectedItems.Count > 0)
             {
                 var itm = (lstTitles.SelectedItems[0].Tag as Item);
-                if (itm.ItsPS3)
+                if (itm.ItsPS3 || itm.ItsPS4)
                 {
                     if (string.IsNullOrEmpty(itm.zRif))
                     {
