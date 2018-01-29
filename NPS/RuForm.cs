@@ -16,13 +16,14 @@ namespace NPS
     {
         public const string version = "0.77_beta3";
         List<Item> currentDatabase = new List<Item>();
+
         List<Item> gamesDbs = new List<Item>();
-        List<Item> dlcsDbs = new List<Item>();
-        List<Item> psmDbs = new List<Item>();
-        List<Item> psxDbs = new List<Item>();
+		List<Item> avatarsDbs = new List<Item>();
+		List<Item> dlcsDbs = new List<Item>();
 		List<Item> themesDbs = new List<Item>();
 		List<Item> updatesDbs = new List<Item>();
-		List<Item> avatarsDbs = new List<Item>();
+
+		HashSet<string> types = new HashSet<string>();
 		HashSet<string> regions = new HashSet<string>();
         int currentOrderColumn = 0;
         bool currentOrderInverted = false;
@@ -174,7 +175,11 @@ namespace NPS
 				rbnGames.Checked = true;
 				currentDatabase = gamesDbs;
 
+				cmbType.Items.Clear();
 				cmbRegion.Items.Clear();
+
+				foreach (string s in types)
+					cmbType.Items.Add(s);
 
 				foreach (string s in regions)
 					cmbRegion.Items.Add(s);
@@ -533,6 +538,7 @@ namespace NPS
 					itm.CalculateDlCs(dlcsDbs.ToArray());
 
 				dbs.Add(itm);
+				types.Add(itm.contentType);
 				regions.Add(itm.Region.Replace(" ", ""));
 			}
 		}

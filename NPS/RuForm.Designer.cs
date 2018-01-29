@@ -493,16 +493,6 @@ namespace NPS
 			this.cmbType.CheckBoxProperties = checkBoxProperties3;
 			this.cmbType.DisplayMemberSingleItem = "";
 			this.cmbType.FormattingEnabled = true;
-			this.cmbType.Items.AddRange(new object[] {
-            "VITA",
-            "PS3",
-			"PS4",
-            "PSX",
-            "PSM",
-            "PSP",
-            "PC Engine",
-            "NeoGeo",
-            "Minis"});
 			this.cmbType.Location = new System.Drawing.Point(549, 3);
 			this.cmbType.Name = "cmbType";
 			this.cmbType.Size = new System.Drawing.Size(152, 21);
